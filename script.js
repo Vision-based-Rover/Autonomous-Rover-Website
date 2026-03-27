@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ── TERMINAL TYPING ── */
   const lines = [
-    { t:"anas@awr-node:~$ systemctl status awr-navigation", c:"cmd" },
+    { t:"MIC@awr-node:~$ systemctl status awr-navigation", c:"cmd" },
     { t:"● awr-navigation.service — AWR Embedded Navigation", c:"ok" },
     { t:"   Active: active (running) — uptime 00:04:12", c:"ok" },
     { t:"", c:"" },
@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
     { t:"[OK]    PPO v6.2 weights loaded — accuracy: 92.0 %", c:"ok" },
     { t:"[OK]    Safety Guard Node active — braking override: ON", c:"ok" },
     { t:"", c:"" },
-    { t:"anas@awr-node:~$ █ Inference loop running @ 15 Hz", c:"success" },
+    { t:"MIC@awr-node:~$ █ Inference loop running @ 15 Hz", c:"success" },
   ];
   function typeTerminal() {
     const body = document.querySelector('.terminal-body');
