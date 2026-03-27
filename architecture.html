@@ -42,10 +42,10 @@
       <div class="card-solo">
         <h3><i class="fas fa-stream"></i> Hardware-to-Motor Signal Flow</h3>
         <div class="pipeline">
-          <div class="pipeline-step">
-            <div class="p-badge">ToF / IR / IMU</div>
-            <div class="p-desc">Raw sensor readings arrive at up to 50 Hz via I²C and GPIO. The <strong>Sensor Bridge Node</strong> normalises and time-stamps each reading before publishing to the ROS 2 graph.</div>
-          </div>
+            <div class="pipeline-step">
+                <div class="p-badge">Lidar SLAM Node</div>
+                <div class="p-desc">The <strong>Slam Toolbox</strong> node processes 360° laser scans to generate a real-time occupancy grid, providing a global reference that eliminates long-term odometric drift.</div>
+            </div>
           <div class="pipeline-step">
             <div class="p-badge">EKF State Estimator</div>
             <div class="p-desc">Wheel encoder odometry and IMU yaw are fused through an <strong>Extended Kalman Filter</strong> at 100 Hz, producing a smooth pose estimate that corrects for wheel slip and drift.</div>

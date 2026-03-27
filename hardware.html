@@ -73,20 +73,19 @@
         </div>
 
         <div class="card" data-num="03">
-          <div class="card-indicator"></div>
-          <h3><i class="fas fa-broadcast-tower"></i> Sensing — Perception Suite</h3>
-          <p>Multi-modal sensor fusion gives the robot a complete picture of its immediate environment for both navigation and safety enforcement.</p>
-          <ul>
-            <li>VL53L0X ToF sensors ×4 — ranging up to 2 m</li>
-            <li>MPU-6050 IMU — 6-axis roll/pitch/yaw</li>
-            <li>Sharp IR sensors ×2 — short-range wall-follow</li>
-            <li>HC-SR04 ultrasonic (redundancy fallback)</li>
-          </ul>
-          <div style="margin-top:14px;">
-            <span class="tag amber">Sensor Fusion</span>
-            <span class="tag">EKF Odometry</span>
-          </div>
-          <img src="image4.png" alt="Sensor Array">
+            <div class="card-indicator"></div>
+            <h3><i class="fas fa-satellite-dish"></i> Sensing — 360° Lidar Suite</h3>
+            <p>Primary perception is now driven by a 360° Laser Range Scanner, providing high-frequency point clouds for SLAM and robust obstacle detection in dynamic environments.</p>
+            <ul>
+                <li>RPLidar A1/A2 — 12m scanning radius</li>
+                <li>8000+ samples per second</li>
+                <li>VL53L0X ToF Sensors — Redundant near-field coverage</li>
+                <li>MPU-6050 IMU — Fused for heading stability</li>
+            </ul>
+            <div style="margin-top:14px;">
+                <span class="tag amber">Lidar SLAM</span>
+                <span class="tag">Point Cloud</span>
+            </div>
         </div>
 
         <div class="card" data-num="04">
