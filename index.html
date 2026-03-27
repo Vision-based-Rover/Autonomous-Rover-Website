@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWR Dashboard | v6.2</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo"><i class="fas fa-microchip"></i> WAREHOUSE_RL_v6.2</div>
+                <ul>
+                    <li><a href="index.html" class="active">Terminal</a></li>
+                    <li><a href="hardware.html">Hardware</a></li>
+                    <li><a href="architecture.html">Architecture</a></li>
+                    <li><a href="industrial.html">Industrial</a></li>
+                    <li><a href="team.html">Team</a></li>
+                </ul>
+            </nav>
+            <div class="hero">
+                <h1>Autonomous <span class="logo">Inference</span></h1>
+                <p>Solving sparse rewards via <strong>Curriculum Learning</strong>. Agent stability achieved at Level 6.</p>
+                
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <span class="label">MODEL_VER</span>
+                        <span class="value">v6.2</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="label">SUCCESS_RATE</span>
+                        <span class="value accent">92.0%</span> 
+                    </div>
+                    <div class="stat-box">
+                        <span class="label">ARCH</span>
+                        <span class="value">PPO / SB3</span>
+                    </div>
+                </div>
+
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                        <span class="terminal-title">anas@awr-node: ~/training_logs</span>
+                    </div>
+                    <div class="terminal-body"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="demo" class="container">
+            <div class="video-container">
+                <video autoplay muted loop playsinline aria-label="Warehouse Navigation Demo">
+                    <source src="showcase/warehouse_level_6.mp4" type="video/mp4">
+                </video>
+                <div class="video-overlay">
+                    <pre style="margin:0;">{ "status": "MISSION_SUCCESS", "accuracy": "92%" }</pre>
+                </div>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="grid">
+                <div class="card">
+                    <h3><i class="fas fa-industry"></i> Industry Relevance</h3>
+                    <p>Warehouses rely on manual navigation or expensive robotics. This system reduces cost by using RL-based adaptive navigation.</p>
+                </div>
+                <div class="card">
+                    <h3><i class="fas fa-brain"></i> Innovation</h3>
+                    <p>Uses curriculum learning to solve sparse reward problems, improving stability across environment complexity.</p>
+                </div>
+                <div class="card">
+                    <h3><i class="fas fa-chart-line"></i> Scalability</h3>
+                    <p>Architecture supports scaling to real-world deployment using ROS 2 and embedded hardware.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="container" style="margin-bottom: 40px;">
+            <div class="card">
+                <h3>📊 Current Status</h3>
+                <ul>
+                    <li>Simulation: Completed</li>
+                    <li>Model Training: Stable</li>
+                    <li>Hardware Integration: In Progress</li>
+                    <li>Deployment: Upcoming</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <div class="status-bar">
+        <div class="status-item"><i class="fas fa-code-branch"></i> main*</div>
+        <div class="status-item"><i class="fas fa-circle" style="color: #27c93f; font-size: 8px;"></i> System Online</div>
+        <div class="status-item" id="clock">00:00:00</div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
