@@ -62,7 +62,7 @@
             <tr>
               <td>Embedded &amp; Hardware</td>
               <td>Monalisa Das, Ramyashri S</td>
-              <td><span class="tag amber">In Progress</span></td>
+              <td><span class="tag amber">Upcoming</span></td>
             </tr>
             <tr>
               <td>Computer Vision</td>
@@ -72,7 +72,7 @@
             <tr>
               <td>Integration &amp; Testing</td>
               <td>Ramyashri S, Tejaswi Ealumalai</td>
-              <td><span class="tag amber">In Progress</span></td>
+              <td><span class="tag amber">Upcoming</span></td>
             </tr>
           </tbody>
         </table>
@@ -85,20 +85,20 @@
         <div class="card">
           <div class="card-indicator"></div>
           <h3><i class="fas fa-brain"></i> Reinforcement Learning</h3>
-          <p>PPO policy design, curriculum learning stages, reward shaping, and hyperparameter tuning. Responsible for achieving 92% navigation accuracy across all simulation levels.</p>
-          <div style="margin-top:14px;"><span class="tag amber">PPO</span><span class="tag">SB3</span><span class="tag">Gymnasium</span></div>
+          <p>PPO policy design, curriculum learning stages, reward shaping, and hyperparameter tuning. Achieved 92% navigation accuracy across all simulation levels — <strong>complete</strong>.</p>
+          <div style="margin-top:14px;"><span class="tag green">Complete</span><span class="tag amber">PPO</span><span class="tag">SB3</span><span class="tag">Gymnasium</span></div>
         </div>
         <div class="card">
           <div class="card-indicator"></div>
           <h3><i class="fas fa-microchip"></i> Embedded &amp; Hardware</h3>
-          <p>Physical robot assembly, Raspberry Pi integration, motor driver wiring, sensor mounting, and ROS 2 hardware bridge configuration.</p>
-          <div style="margin-top:14px;"><span class="tag amber">ROS 2</span><span class="tag">RPi 4</span><span class="tag amber">In Progress</span></div>
+          <p>Physical robot assembly, Raspberry Pi integration, motor driver wiring, sensor mounting, and ROS 2 hardware bridge configuration. <strong>Starts after BOM procurement.</strong></p>
+          <div style="margin-top:14px;"><span class="tag amber">Upcoming</span><span class="tag">ROS 2</span><span class="tag">RPi 4</span></div>
         </div>
         <div class="card">
           <div class="card-indicator"></div>
           <h3><i class="fas fa-eye"></i> Computer Vision</h3>
-          <p>Pi Camera pipeline, Tiny-YOLO integration for shelf and obstacle detection, and visual odometry research for future SLAM integration.</p>
-          <div style="margin-top:14px;"><span class="tag">OpenCV</span><span class="tag">Tiny-YOLO</span></div>
+          <p>Pi Camera pipeline, Tiny-YOLO integration for shelf and obstacle detection, and visual odometry research for future SLAM integration. Active in parallel with hardware planning.</p>
+          <div style="margin-top:14px;"><span class="tag green">Active</span><span class="tag">OpenCV</span><span class="tag">Tiny-YOLO</span></div>
         </div>
       </div>
     </section>
@@ -108,28 +108,32 @@
       <div class="card-solo">
         <h3><i class="fas fa-tasks"></i> Overall Timeline</h3>
         <div class="progress-wrap">
-          <div class="progress-label"><span>RL Policy Development</span><span>Complete</span></div>
+          <div class="progress-label"><span>RL Policy Development</span><span>Complete ✓</span></div>
           <div class="progress-bar"><div class="progress-fill" style="--prog-w:100%"></div></div>
         </div>
         <div class="progress-wrap">
-          <div class="progress-label"><span>Simulation Environment</span><span>Complete</span></div>
+          <div class="progress-label"><span>Simulation Environment</span><span>Complete ✓</span></div>
           <div class="progress-bar"><div class="progress-fill" style="--prog-w:100%"></div></div>
         </div>
         <div class="progress-wrap">
-          <div class="progress-label"><span>Hardware Assembly &amp; Integration</span><span>Active</span></div>
-          <div class="progress-bar"><div class="progress-fill" style="background:var(--orange);--prog-w:60%"></div></div>
+          <div class="progress-label"><span>Software Architecture (MVC + ROS 2 Design)</span><span>Complete ✓</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="--prog-w:100%"></div></div>
         </div>
         <div class="progress-wrap">
-          <div class="progress-label"><span>Real-World Deployment</span><span>Upcoming</span></div>
-          <div class="progress-bar"><div class="progress-fill" style="background:var(--text-muted);--prog-w:10%"></div></div>
+          <div class="progress-label"><span>Hardware BOM &amp; Procurement</span><span>Planned</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="background:var(--orange);--prog-w:15%"></div></div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-label"><span>Physical Build &amp; Real-World Deployment</span><span>Upcoming</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="background:var(--text-muted);--prog-w:0%"></div></div>
         </div>
       </div>
     </section>
   </main>
 
   <div class="status-bar">
-    <div class="status-item amber"><i class="fas fa-user-shield"></i> AUTH: USER</div>
-    <div class="status-item green"><div class="status-dot"></div> Team Online</div>
+    <div class="status-item amber"><i class="fas fa-users"></i> 5 Engineers</div>
+    <div class="status-item green"><div class="status-dot"></div> Sim Phase Done</div>
     <div class="status-item clock"></div>
   </div>
   <script src="script.js"></script>

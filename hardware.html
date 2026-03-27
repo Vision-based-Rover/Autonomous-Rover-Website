@@ -30,20 +30,20 @@
 
   <main>
     <section class="container" style="padding-top:40px;">
-      <div class="hero-label">Bill of Materials — Physical Build</div>
-      <div class="callout">
-        Every component was chosen to maximise performance per dollar. The full chassis, compute, sensing, and actuation stack costs a fraction of commercial AGV alternatives — and can be sourced, assembled, and replaced by any engineering team.
+      <div class="hero-label">Bill of Materials — Planned Hardware Stack</div>
+      <div class="callout blue">
+        <strong>Hardware Phase — Upcoming:</strong> The RL policy and software architecture are complete. The hardware stack below has been fully specced and costed — physical build and integration is the team's next milestone.
       </div>
     </section>
 
     <section class="container">
-      <div class="section-header"><h2>Component Breakdown</h2></div>
+      <div class="section-header"><h2>Planned Component Breakdown</h2></div>
       <div class="grid">
 
         <div class="card" data-num="01">
           <div class="card-indicator"></div>
           <h3><i class="fas fa-microchip"></i> Compute — Raspberry Pi 4</h3>
-          <p>The onboard brain. Runs ROS 2 Humble, the PPO inference loop at 15 Hz, and the Safety Guard Node simultaneously on 4 GB LPDDR4 RAM.</p>
+          <p>The planned onboard brain. Will run ROS 2 Humble, the PPO inference loop at 15 Hz, and the Safety Guard Node simultaneously on 4 GB LPDDR4 RAM.</p>
           <ul>
             <li>Quad-core Cortex-A72 @ 1.8 GHz</li>
             <li>4 GB LPDDR4 RAM</li>
@@ -52,14 +52,14 @@
           </ul>
           <div style="margin-top:14px;">
             <span class="tag amber">Primary Compute</span>
+            <span class="tag">Specced</span>
           </div>
-          <img src="image3.png" alt="Raspberry Pi 4">
         </div>
 
         <div class="card" data-num="02">
           <div class="card-indicator"></div>
           <h3><i class="fas fa-cogs"></i> Actuation — Differential Drive</h3>
-          <p>Two independently driven wheels enable zero-radius turns and precise odometric tracking — critical for tight warehouse aisle navigation.</p>
+          <p>Two independently driven wheels will enable zero-radius turns and precise odometric tracking — critical for tight warehouse aisle navigation.</p>
           <ul>
             <li>L298N dual H-bridge motor driver</li>
             <li>PWM speed control per wheel</li>
@@ -73,25 +73,25 @@
         </div>
 
         <div class="card" data-num="03">
-            <div class="card-indicator"></div>
-            <h3><i class="fas fa-satellite-dish"></i> Sensing — 360° Lidar Suite</h3>
-            <p>Primary perception is now driven by a 360° Laser Range Scanner, providing high-frequency point clouds for SLAM and robust obstacle detection in dynamic environments.</p>
-            <ul>
-                <li>RPLidar A1/A2 — 12m scanning radius</li>
-                <li>8000+ samples per second</li>
-                <li>VL53L0X ToF Sensors — Redundant near-field coverage</li>
-                <li>MPU-6050 IMU — Fused for heading stability</li>
-            </ul>
-            <div style="margin-top:14px;">
-                <span class="tag amber">Lidar SLAM</span>
-                <span class="tag">Point Cloud</span>
-            </div>
+          <div class="card-indicator"></div>
+          <h3><i class="fas fa-broadcast-tower"></i> Sensing — Perception Suite</h3>
+          <p>Multi-modal sensor fusion will give the robot a complete picture of its immediate environment for both navigation and safety enforcement.</p>
+          <ul>
+            <li>VL53L0X ToF sensors ×4 — ranging up to 2 m</li>
+            <li>MPU-6050 IMU — 6-axis roll/pitch/yaw</li>
+            <li>Sharp IR sensors ×2 — short-range wall-follow</li>
+            <li>HC-SR04 ultrasonic (redundancy fallback)</li>
+          </ul>
+          <div style="margin-top:14px;">
+            <span class="tag amber">Sensor Fusion</span>
+            <span class="tag">EKF Odometry</span>
+          </div>
         </div>
 
         <div class="card" data-num="04">
           <div class="card-indicator"></div>
           <h3><i class="fas fa-camera"></i> Vision — Pi Camera Module</h3>
-          <p>Raw video capture for visual navigation pipelines. Currently feeds Tiny-YOLO for obstacle classification; future SLAM and visual odometry correction planned.</p>
+          <p>Raw video capture for visual navigation pipelines. Planned to feed Tiny-YOLO for obstacle classification, with SLAM and visual odometry correction in future iterations.</p>
           <ul>
             <li>Pi Camera Module 2 / 3</li>
             <li>ESP32-CAM optional secondary angle</li>
@@ -106,51 +106,61 @@
       </div>
     </section>
 
+    <!-- TARGET SPECS -->
     <section class="container">
-      <div class="section-header"><h2>Performance Specs</h2></div>
+      <div class="section-header"><h2>Target Performance Specs</h2></div>
       <div class="card-solo">
-        <h3><i class="fas fa-tachometer-alt"></i> Key Metrics</h3>
+        <h3><i class="fas fa-tachometer-alt"></i> Simulation Benchmarks → Hardware Targets</h3>
+        <div class="callout" style="margin-bottom:20px; font-size:0.82rem;">
+          The metrics below reflect <strong>simulation results</strong>. Real-world hardware validation is the next step — these serve as the baseline targets for physical deployment.
+        </div>
         <div class="progress-wrap">
-          <div class="progress-label"><span>Navigation Accuracy</span><span>92 %</span></div>
+          <div class="progress-label"><span>Navigation Accuracy (Simulation)</span><span>92 %</span></div>
           <div class="progress-bar"><div class="progress-fill" style="--prog-w:92%"></div></div>
         </div>
         <div class="progress-wrap">
-          <div class="progress-label"><span>ToF Sensor Coverage (4 / 4 online)</span><span>100 %</span></div>
-          <div class="progress-bar"><div class="progress-fill" style="--prog-w:100%"></div></div>
+          <div class="progress-label"><span>Policy Inference Rate (Target)</span><span>15 Hz</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="--prog-w:78%"></div></div>
         </div>
         <div class="progress-wrap">
-          <div class="progress-label"><span>Localisation Accuracy</span><span>±5 cm</span></div>
-          <div class="progress-bar"><div class="progress-fill" style="--prog-w:85%"></div></div>
+          <div class="progress-label"><span>Hardware Build Progress</span><span>Not Started</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="background:var(--text-muted);--prog-w:0%"></div></div>
         </div>
         <div class="progress-wrap">
-          <div class="progress-label"><span>Vision Pipeline Readiness</span><span>Beta</span></div>
-          <div class="progress-bar"><div class="progress-fill" style="background:var(--orange);--prog-w:55%"></div></div>
+          <div class="progress-label"><span>Vision Pipeline</span><span>Planned</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="background:var(--orange);--prog-w:20%"></div></div>
         </div>
       </div>
     </section>
 
     <section class="container" style="margin-bottom:50px;">
-      <div class="section-header"><h2>Redundancy & Fallbacks</h2></div>
+      <div class="section-header"><h2>Alternatives &amp; Fallbacks</h2></div>
       <div class="grid">
         <div class="card">
           <div class="card-indicator"></div>
           <h3><i class="fas fa-exchange-alt"></i> Ultrasonic Fallback</h3>
-          <p>HC-SR04 ultrasonic sensors substitute IR units in cost-constrained builds, maintaining functional obstacle avoidance without the full perception suite.</p>
-          <span class="tag" style="margin-top:12px;display:inline-block;">Fallback Mode</span>
+          <p>HC-SR04 ultrasonic sensors can substitute IR units in cost-constrained builds, maintaining functional obstacle avoidance without the full perception suite.</p>
+          <span class="tag" style="margin-top:12px;display:inline-block;">Fallback Option</span>
         </div>
         <div class="card">
           <div class="card-indicator"></div>
           <h3><i class="fas fa-microchip"></i> Edge Inference Upgrade</h3>
-          <p>Policy inference can migrate to a <strong>Coral USB Accelerator</strong> or <strong>TensorRT</strong> runtime — cutting latency below 20 ms and freeing CPU cycles for perception.</p>
+          <p>Policy inference can later migrate to a <strong>Coral USB Accelerator</strong> or <strong>TensorRT</strong> runtime — cutting latency below 20 ms and freeing CPU cycles for full camera processing.</p>
           <span class="tag amber" style="margin-top:12px;display:inline-block;">Roadmap</span>
+        </div>
+        <div class="card">
+          <div class="card-indicator"></div>
+          <h3><i class="fas fa-compass"></i> IMU Upgrade Path</h3>
+          <p>The MPU-6050 can be upgraded to a <strong>BNO055</strong> for absolute orientation data and better heading stability — useful once real-world drift characteristics are measured.</p>
+          <span class="tag" style="margin-top:12px;display:inline-block;">Optional Upgrade</span>
         </div>
       </div>
     </section>
   </main>
 
   <div class="status-bar">
-    <div class="status-item amber"><i class="fas fa-microchip"></i> RPi_CONNECTED</div>
-    <div class="status-item green"><div class="status-dot"></div> All Sensors Nominal</div>
+    <div class="status-item amber"><i class="fas fa-microchip"></i> BOM Finalised</div>
+    <div class="status-item"><div class="status-dot" style="background:var(--orange);box-shadow:0 0 6px var(--orange);"></div> Hardware: Pending</div>
     <div class="status-item clock"></div>
   </div>
   <script src="script.js"></script>

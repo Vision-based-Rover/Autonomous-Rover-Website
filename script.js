@@ -36,7 +36,6 @@ document.addEventListener("DOMContentLoaded", () => {
         p.x += p.vx; p.y += p.vy;
         if (p.x<0)p.x=W; if (p.x>W)p.x=0;
         if (p.y<0)p.y=H; if (p.y>H)p.y=0;
-        // draw as small diamonds to match industrial theme
         ctx.save();
         ctx.translate(p.x, p.y);
         ctx.rotate(Math.PI/4);
@@ -59,19 +58,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ── TERMINAL TYPING ── */
   const lines = [
-    { t:"MIC@awr-node:~$ systemctl status awr-navigation", c:"cmd" },
-    { t:"● awr-navigation.service — AWR Embedded Navigation", c:"ok" },
-    { t:"   Active: active (running) — uptime 00:04:12", c:"ok" },
+    { t:"awr@sim-node:~$ python test.py --model models/warehouse_demo_ppo_v6.2.zip --level 6", c:"cmd" },
     { t:"", c:"" },
-    { t:"[INFO]  ROS 2 Humble initialised", c:"info" },
-    { t:"[OK]    MPU-6050 IMU @ /dev/i2c-1 → yaw drift ±0.1°", c:"ok" },
-    { t:"[OK]    VL53L0X ToF ×4 → all channels nominal", c:"ok" },
-    { t:"[OK]    L298N motor driver PWM ready", c:"ok" },
-    { t:"[WARN]  Camera warm-up: 312ms", c:"warn" },
-    { t:"[OK]    PPO v6.2 weights loaded — accuracy: 92.0 %", c:"ok" },
-    { t:"[OK]    Safety Guard Node active — braking override: ON", c:"ok" },
+    { t:"[INFO]  Loading PPO v6.2 policy weights...", c:"info" },
+    { t:"[OK]    Model loaded — 92.0% validation accuracy", c:"ok" },
+    { t:"[OK]    Gymnasium warehouse env initialised — Level 6", c:"ok" },
+    { t:"[OK]    MVC stack ready — EvalController active", c:"ok" },
     { t:"", c:"" },
-    { t:"MIC@awr-node:~$ █ Inference loop running @ 15 Hz", c:"success" },
+    { t:"[SIM]   Episode  1 — Steps:  84 — Reward: 421.3 — SUCCESS", c:"ok" },
+    { t:"[SIM]   Episode  2 — Steps:  91 — Reward: 408.7 — SUCCESS", c:"ok" },
+    { t:"[SIM]   Episode  3 — Steps: 102 — Reward: 395.1 — SUCCESS", c:"ok" },
+    { t:"", c:"" },
+    { t:"[DONE]  3/3 episodes — Accuracy: 100% — Collisions: 0", c:"success" },
+    { t:"awr@sim-node:~$ █ Hardware integration: upcoming", c:"warn" },
   ];
   function typeTerminal() {
     const body = document.querySelector('.terminal-body');
@@ -84,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const el=document.createElement('code'); el.style.display='block';
       if(c) el.classList.add(c); el.textContent=t; body.appendChild(el);
       body.scrollTop=body.scrollHeight;
-      setTimeout(next, t===''?60:250);
+      setTimeout(next, t===''?60:220);
     }
     next();
   }

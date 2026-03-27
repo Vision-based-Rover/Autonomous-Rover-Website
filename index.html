@@ -32,10 +32,10 @@
     <!-- HERO -->
     <section class="hero-section container">
       <div class="hero">
-        <div class="hero-label">Autonomous Warehouse Robot — RL-Powered Navigation</div>
-        <h1>Built to<br><em>Navigate.</em><br><span class="outline">Built to Scale.</span></h1>
-        <p class="hero-sub">Raspberry Pi 4 · ROS 2 · PPO v6.2 · ToF + IMU Sensor Fusion</p>
-        <p>A cost-effective, hardware-first autonomous ground vehicle that navigates real warehouse environments using onboard reinforcement learning — no cloud, no expensive infrastructure, no fixed tracks.</p>
+        <div class="hero-label">Autonomous Warehouse Robot — Simulation &amp; RL Complete</div>
+        <h1>Trained to<br><em>Navigate.</em><br><span class="outline">Built to Scale.</span></h1>
+        <p class="hero-sub">PPO v6.2 · Curriculum RL · Gymnasium · ROS 2 Architecture</p>
+        <p>A simulation-first autonomous navigation system for warehouse environments — the RL policy and full software stack are complete and validated. Hardware integration is the next phase.</p>
 
         <!-- Spec strip -->
         <div class="spec-strip">
@@ -56,8 +56,8 @@
             <span class="s-value blue">15 Hz</span>
           </div>
           <div class="spec-cell">
-            <span class="s-label">Status</span>
-            <span class="s-value green">ONLINE</span>
+            <span class="s-label">Phase</span>
+            <span class="s-value amber">SIM ✓</span>
           </div>
         </div>
 
@@ -67,7 +67,7 @@
             <div class="dot red"></div>
             <div class="dot yellow"></div>
             <div class="dot green"></div>
-            <span class="terminal-title">MIC@awr-node: ~/ros2_ws — bash</span>
+            <span class="terminal-title">awr@sim-node: ~/awr/AI — bash</span>
           </div>
           <div class="terminal-body"></div>
         </div>
@@ -76,15 +76,15 @@
 
     <!-- VIDEO -->
     <section class="container">
-      <div class="section-header"><h2>Navigation Demo</h2></div>
+      <div class="section-header"><h2>Simulation Demo</h2></div>
       <div class="video-container">
-        <video autoplay muted loop playsinline aria-label="Warehouse Navigation Demo">
+        <video autoplay muted loop playsinline aria-label="Warehouse Simulation Demo">
           <source src="showcase/warehouse_level_6.mp4" type="video/mp4">
         </video>
         <div class="video-overlay">
           <pre>STATUS: MISSION_SUCCESS&#10;ACCURACY: 92.0 %&#10;COLLISIONS: 0</pre>
         </div>
-        <div class="video-badge">REC</div>
+        <div class="video-badge">SIM</div>
       </div>
     </section>
 
@@ -94,26 +94,26 @@
       <div class="grid">
         <div class="card" data-num="01">
           <div class="card-indicator"></div>
-          <h3><i class="fas fa-robot"></i> Physical Robot</h3>
-          <p>A differential-drive ground vehicle assembled from off-the-shelf components — Raspberry Pi 4, L298N motor driver, VL53L0X ToF sensors, and MPU-6050 IMU. Total BOM cost is a fraction of commercial AGV systems.</p>
+          <h3><i class="fas fa-brain"></i> RL-Trained Policy</h3>
+          <p>A PPO agent trained from scratch via curriculum learning in a custom Gymnasium warehouse simulation. The policy reaches 92% navigation accuracy across six levels of increasing difficulty — zero collisions.</p>
           <div style="margin-top:14px;">
-            <span class="tag amber">Raspberry Pi 4</span>
-            <span class="tag">Differential Drive</span>
+            <span class="tag amber">PPO v6.2</span>
+            <span class="tag">Stable-Baselines3</span>
           </div>
         </div>
         <div class="card" data-num="02">
           <div class="card-indicator"></div>
-          <h3><i class="fas fa-brain"></i> Onboard RL Policy</h3>
-          <p>A PPO policy trained via curriculum learning runs directly on the Raspberry Pi at 15 Hz. No cloud dependency — the robot reasons locally from sensor data and acts in real time.</p>
+          <h3><i class="fas fa-microchip"></i> Planned Hardware</h3>
+          <p>The physical robot is designed around a Raspberry Pi 4, L298N motor driver, VL53L0X ToF sensors, and MPU-6050 IMU. The full bill of materials is finalised — hardware build is the next milestone.</p>
           <div style="margin-top:14px;">
-            <span class="tag amber">PPO v6.2</span>
-            <span class="tag">15 Hz Local Inference</span>
+            <span class="tag">Raspberry Pi 4</span>
+            <span class="tag amber">In Procurement</span>
           </div>
         </div>
         <div class="card" data-num="03">
           <div class="card-indicator"></div>
           <h3><i class="fas fa-shield-alt"></i> Safety-First Design</h3>
-          <p>A deterministic Safety Guard Node overrides RL commands whenever braking distance constraints are violated — guaranteeing zero collisions regardless of policy edge cases.</p>
+          <p>A deterministic Safety Guard Node is designed to override RL commands whenever braking distance constraints are violated — guaranteeing zero collisions regardless of policy edge cases, in both simulation and hardware.</p>
           <div style="margin-top:14px;">
             <span class="tag green">Zero Collisions</span>
             <span class="tag">Hard Override</span>
@@ -128,20 +128,24 @@
       <div class="card-solo">
         <h3><i class="fas fa-tasks"></i> Build Milestones</h3>
         <div class="progress-wrap">
-          <div class="progress-label"><span>Simulation & RL Training</span><span>Complete</span></div>
+          <div class="progress-label"><span>Simulation Environment</span><span>Complete</span></div>
           <div class="progress-bar"><div class="progress-fill" style="--prog-w:100%"></div></div>
         </div>
         <div class="progress-wrap">
-          <div class="progress-label"><span>Policy Accuracy</span><span>92%</span></div>
-          <div class="progress-bar"><div class="progress-fill" style="--prog-w:92%"></div></div>
+          <div class="progress-label"><span>RL Policy — PPO v6.2 (92% accuracy)</span><span>Complete</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="--prog-w:100%"></div></div>
         </div>
         <div class="progress-wrap">
-          <div class="progress-label"><span>Hardware Assembly & Integration</span><span>In Progress</span></div>
-          <div class="progress-bar"><div class="progress-fill" style="background:var(--orange);--prog-w:60%"></div></div>
+          <div class="progress-label"><span>Software Architecture (MVC + ROS 2 Design)</span><span>Complete</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="--prog-w:100%"></div></div>
         </div>
         <div class="progress-wrap">
-          <div class="progress-label"><span>Real-World Deployment</span><span>Upcoming</span></div>
-          <div class="progress-bar"><div class="progress-fill" style="background:var(--text-muted);--prog-w:10%"></div></div>
+          <div class="progress-label"><span>Hardware BOM &amp; Procurement</span><span>Planned</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="background:var(--orange);--prog-w:15%"></div></div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-label"><span>Physical Build &amp; Real-World Deployment</span><span>Upcoming</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="background:var(--text-muted);--prog-w:0%"></div></div>
         </div>
       </div>
     </section>
@@ -149,7 +153,7 @@
 
   <div class="status-bar">
     <div class="status-item amber"><i class="fas fa-code-branch"></i> main</div>
-    <div class="status-item green"><div class="status-dot"></div> System Online</div>
+    <div class="status-item green"><div class="status-dot"></div> Sim Complete</div>
     <div class="status-item"><i class="fas fa-microchip"></i> PPO v6.2</div>
     <div class="status-item clock"></div>
   </div>

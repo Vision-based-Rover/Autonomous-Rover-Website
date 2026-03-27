@@ -30,33 +30,36 @@
 
   <main>
     <section class="container" style="padding-top:40px;">
-      <div class="hero-label">Embedded Software — Control Architecture</div>
+      <div class="hero-label">Software Design — Control Architecture</div>
       <div class="callout">
-        The software is structured around a <strong>Model-View-Controller</strong> pattern and a layered <strong>ROS 2 node graph</strong>. Each layer can be tested, replaced, or scaled independently — making the jump from simulation to real hardware a controlled, repeatable process.
+        The software is structured around a <strong>Model-View-Controller</strong> pattern and a layered <strong>ROS 2 node graph</strong>. The MVC layer and simulation stack are <strong>fully implemented</strong>. The ROS 2 embedded pipeline is designed and ready for hardware integration once the physical build begins.
       </div>
     </section>
 
     <!-- CONTROL PIPELINE -->
     <section class="container">
-      <div class="section-header"><h2>Real-Time Control Pipeline</h2></div>
+      <div class="section-header"><h2>Planned Real-Time Control Pipeline</h2></div>
       <div class="card-solo">
         <h3><i class="fas fa-stream"></i> Hardware-to-Motor Signal Flow</h3>
+        <div class="callout blue" style="margin-bottom:18px;font-size:0.82rem;">
+          <strong>Design Status:</strong> This pipeline is fully designed and validated in simulation. ROS 2 node wiring will be implemented during hardware integration.
+        </div>
         <div class="pipeline">
-            <div class="pipeline-step">
-                <div class="p-badge">Lidar SLAM Node</div>
-                <div class="p-desc">The <strong>Slam Toolbox</strong> node processes 360° laser scans to generate a real-time occupancy grid, providing a global reference that eliminates long-term odometric drift.</div>
-            </div>
+          <div class="pipeline-step">
+            <div class="p-badge">ToF / IR / IMU</div>
+            <div class="p-desc">Raw sensor readings will arrive at up to 50 Hz via I²C and GPIO. The <strong>Sensor Bridge Node</strong> normalises and time-stamps each reading before publishing to the ROS 2 graph.</div>
+          </div>
           <div class="pipeline-step">
             <div class="p-badge">EKF State Estimator</div>
-            <div class="p-desc">Wheel encoder odometry and IMU yaw are fused through an <strong>Extended Kalman Filter</strong> at 100 Hz, producing a smooth pose estimate that corrects for wheel slip and drift.</div>
+            <div class="p-desc">Wheel encoder odometry and IMU yaw will be fused through an <strong>Extended Kalman Filter</strong> at 100 Hz, producing a smooth pose estimate that corrects for wheel slip and drift.</div>
           </div>
           <div class="pipeline-step">
             <div class="p-badge">PPO Policy Node</div>
-            <div class="p-desc">The <strong>PPO v6.2 policy</strong> receives the fused state vector and outputs a continuous velocity command at 10–20 Hz. Inference runs entirely on the Raspberry Pi — no network dependency.</div>
+            <div class="p-desc">The <strong>PPO v6.2 policy</strong> — trained and validated in simulation — receives the fused state vector and outputs a continuous velocity command at 10–20 Hz. Inference runs entirely on the Raspberry Pi with no network dependency.</div>
           </div>
           <div class="pipeline-step">
             <div class="p-badge green">Safety Guard Node</div>
-            <div class="p-desc">A <strong>deterministic override layer</strong> clips any velocity command that would result in a collision given the current braking distance. This layer operates independently of the RL policy — it cannot be disabled.</div>
+            <div class="p-desc">A <strong>deterministic override layer</strong> clips any velocity command that would result in a collision given the current braking distance. This layer operates independently of the RL policy and cannot be disabled.</div>
           </div>
           <div class="pipeline-step">
             <div class="p-badge green">L298N Motor Driver</div>
@@ -68,7 +71,7 @@
 
     <!-- MVC -->
     <section class="container">
-      <div class="section-header"><h2>Software MVC Layout</h2></div>
+      <div class="section-header"><h2>Software MVC Layout — Implemented</h2></div>
       <div class="grid">
         <div class="card" data-num="M">
           <div class="card-indicator"></div>
@@ -80,6 +83,7 @@
             <li><strong>safety.py</strong> — Braking constraint enforcement</li>
           </ul>
           <div style="margin-top:14px;">
+            <span class="tag green">Implemented</span>
             <span class="tag amber">Stable-Baselines3</span>
             <span class="tag">Gymnasium</span>
           </div>
@@ -91,9 +95,10 @@
             <li><strong>TrainingController</strong> — Runs curriculum learning stages</li>
             <li><strong>EvalController</strong> — Validates policy across test maps</li>
             <li><strong>ManualController</strong> — WASD keyboard override for testing</li>
-            <li><strong>ROSBridgeController</strong> — Relays commands to hardware</li>
+            <li><strong>ROSBridgeController</strong> — Designed for hardware relay</li>
           </ul>
           <div style="margin-top:14px;">
+            <span class="tag green">Implemented</span>
             <span class="tag amber">ROS 2 Humble</span>
             <span class="tag">Python 3.11</span>
           </div>
@@ -107,6 +112,7 @@
             <li><strong>TelemetryDash</strong> — Real-time reward &amp; accuracy overlay</li>
           </ul>
           <div style="margin-top:14px;">
+            <span class="tag green">Implemented</span>
             <span class="tag">Matplotlib</span>
             <span class="tag">Pygame</span>
           </div>
@@ -116,14 +122,14 @@
 
     <!-- EMBEDDED STACK -->
     <section class="container" style="margin-bottom:50px;">
-      <div class="section-header"><h2>Embedded Node Stack</h2></div>
+      <div class="section-header"><h2>ROS 2 Node Stack — Design</h2></div>
       <div class="terminal-window">
         <div class="terminal-header">
           <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
           <span class="terminal-title">awr-node: ~/ros2_ws — ros2 launch awr_bringup full_stack.launch.py</span>
         </div>
         <div class="terminal-body" style="color: var(--text);">
-          <code style="display:block;color:var(--amber);margin-bottom:12px;color:var(--accent);">$ ros2 launch awr_bringup full_stack.launch.py</code>
+          <code style="display:block;color:var(--accent);margin-bottom:12px;">$ ros2 launch awr_bringup full_stack.launch.py</code>
 
           <code style="display:block;color:var(--text-muted);margin-bottom:4px;">[LAYER 1]  /awr/sensor_bridge  →  50 Hz</code>
           <code style="display:block;margin-bottom:12px;">           Fuses ToF + IR + IMU → /awr/sensor_state</code>
@@ -142,8 +148,8 @@
   </main>
 
   <div class="status-bar">
-    <div class="status-item amber"><i class="fas fa-layer-group"></i> MVC READY</div>
-    <div class="status-item green"><div class="status-dot"></div> ROS 2 Nominal</div>
+    <div class="status-item green"><i class="fas fa-layer-group"></i> MVC Complete</div>
+    <div class="status-item amber"><div class="status-dot" style="background:var(--accent);box-shadow:0 0 6px var(--accent-glow);"></div> ROS 2: Awaiting HW</div>
     <div class="status-item clock"></div>
   </div>
   <script src="script.js"></script>
