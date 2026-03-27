@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AWR Team | Personnel</title>
+  <title>AWR — Team</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -13,9 +13,12 @@
   <header>
     <div class="container">
       <nav>
-        <div class="logo"><i class="fas fa-microchip"></i> WAREHOUSE_RL_v6.2</div>
+        <div class="logo">
+          <div class="logo-icon"><i class="fas fa-robot"></i></div>
+          AWR
+        </div>
         <ul>
-          <li><a href="index.html">Terminal</a></li>
+          <li><a href="index.html">Overview</a></li>
           <li><a href="hardware.html">Hardware</a></li>
           <li><a href="architecture.html">Architecture</a></li>
           <li><a href="industrial.html">Industrial</a></li>
@@ -26,50 +29,50 @@
   </header>
 
   <main>
-    <section class="container" style="padding-top: 40px;">
-      <div class="hero-label">Team &nbsp;—&nbsp; Personnel Registry</div>
+    <section class="container" style="padding-top:40px;">
+      <div class="hero-label">Personnel — Engineering Team</div>
 
       <div class="meta-box">
-        <div style="color: var(--text);">PROJECT_ID <span class="val">PROJ-1765815198235</span></div>
-        <div style="color: var(--text);">LEAD_CONTACT <span class="accent-val">ramyashri.s2025@vitstudent.ac.in</span></div>
-        <div style="color: var(--text);">TEAM_SIZE <span class="val">5 Engineers</span></div>
-        <div style="color: var(--text);">DOMAIN_COUNT <span class="accent-val">5 Specialisations</span></div>
+        <div class="m-row"><span class="m-key">Project ID</span><span class="m-val">PROJ-1765815198235</span></div>
+        <div class="m-row"><span class="m-key">Lead Contact</span><span class="m-val amber">ramyashri.s2025@vitstudent.ac.in</span></div>
+        <div class="m-row"><span class="m-key">Team Size</span><span class="m-val">5 Engineers</span></div>
+        <div class="m-row"><span class="m-key">Specialisations</span><span class="m-val">5 Domains</span></div>
       </div>
 
       <div class="team-table-container">
         <table class="team-table">
           <thead>
             <tr>
-              <th><i class="fas fa-tag"></i> Domain</th>
-              <th><i class="fas fa-user"></i> Lead / Personnel</th>
-              <th><i class="fas fa-circle" style="font-size:0.5rem;"></i> Status</th>
+              <th>Domain</th>
+              <th>Personnel</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>Project Lead</td>
               <td>Ramyashri S</td>
-              <td><span class="tag green" style="margin:0;">Active</span></td>
+              <td><span class="tag green">Active</span></td>
             </tr>
             <tr>
               <td>ML / Reinforcement Learning</td>
               <td>Anas Arfeen</td>
-              <td><span class="tag green" style="margin:0;">Active</span></td>
+              <td><span class="tag green">Active</span></td>
             </tr>
             <tr>
               <td>Embedded &amp; Hardware</td>
               <td>Monalisa Das, Ramyashri S</td>
-              <td><span class="tag orange" style="margin:0;">In Progress</span></td>
+              <td><span class="tag amber">In Progress</span></td>
             </tr>
             <tr>
               <td>Computer Vision</td>
               <td>Susnata Mandal</td>
-              <td><span class="tag green" style="margin:0;">Active</span></td>
+              <td><span class="tag green">Active</span></td>
             </tr>
             <tr>
               <td>Integration &amp; Testing</td>
               <td>Ramyashri S, Tejaswi Ealumalai</td>
-              <td><span class="tag orange" style="margin:0;">In Progress</span></td>
+              <td><span class="tag amber">In Progress</span></td>
             </tr>
           </tbody>
         </table>
@@ -77,55 +80,56 @@
     </section>
 
     <section class="container">
-      <div class="section-header"><h2>// Domain Breakdown</h2></div>
+      <div class="section-header"><h2>Domain Responsibilities</h2></div>
       <div class="grid">
         <div class="card">
+          <div class="card-indicator"></div>
           <h3><i class="fas fa-brain"></i> Reinforcement Learning</h3>
-          <p>PPO policy design, curriculum learning architecture, reward shaping, and hyperparameter tuning. Responsible for achieving 92% navigation accuracy in simulation.</p>
-          <span class="tag" style="margin-top:14px;display:inline-block;">PPO / SB3</span>
-          <span class="tag">Gymnasium</span>
+          <p>PPO policy design, curriculum learning stages, reward shaping, and hyperparameter tuning. Responsible for achieving 92% navigation accuracy across all simulation levels.</p>
+          <div style="margin-top:14px;"><span class="tag amber">PPO</span><span class="tag">SB3</span><span class="tag">Gymnasium</span></div>
         </div>
         <div class="card">
+          <div class="card-indicator"></div>
           <h3><i class="fas fa-microchip"></i> Embedded &amp; Hardware</h3>
-          <p>Raspberry Pi 4 integration, motor driver configuration, sensor wiring, and ROS 2 hardware bridge. Handles the physical-digital interface layer.</p>
-          <span class="tag" style="margin-top:14px;display:inline-block;">ROS 2</span>
-          <span class="tag orange">In Progress</span>
+          <p>Physical robot assembly, Raspberry Pi integration, motor driver wiring, sensor mounting, and ROS 2 hardware bridge configuration.</p>
+          <div style="margin-top:14px;"><span class="tag amber">ROS 2</span><span class="tag">RPi 4</span><span class="tag amber">In Progress</span></div>
         </div>
         <div class="card">
+          <div class="card-indicator"></div>
           <h3><i class="fas fa-eye"></i> Computer Vision</h3>
-          <p>Pi Camera pipeline development, Tiny-YOLO integration for object detection, and visual odometry research for future SLAM capabilities.</p>
-          <span class="tag" style="margin-top:14px;display:inline-block;">OpenCV</span>
-          <span class="tag">Tiny-YOLO</span>
+          <p>Pi Camera pipeline, Tiny-YOLO integration for shelf and obstacle detection, and visual odometry research for future SLAM integration.</p>
+          <div style="margin-top:14px;"><span class="tag">OpenCV</span><span class="tag">Tiny-YOLO</span></div>
         </div>
       </div>
     </section>
 
     <section class="container" style="margin-bottom:50px;">
-      <div class="section-header"><h2>// Project Timeline</h2></div>
-      <div class="card">
+      <div class="section-header"><h2>Build Progress</h2></div>
+      <div class="card-solo">
+        <h3><i class="fas fa-tasks"></i> Overall Timeline</h3>
+        <div class="progress-wrap">
+          <div class="progress-label"><span>RL Policy Development</span><span>Complete</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="--prog-w:100%"></div></div>
+        </div>
         <div class="progress-wrap">
           <div class="progress-label"><span>Simulation Environment</span><span>Complete</span></div>
           <div class="progress-bar"><div class="progress-fill" style="--prog-w:100%"></div></div>
         </div>
         <div class="progress-wrap">
-          <div class="progress-label"><span>RL Policy Training</span><span>v6.2 Stable</span></div>
-          <div class="progress-bar"><div class="progress-fill" style="--prog-w:92%"></div></div>
-        </div>
-        <div class="progress-wrap">
-          <div class="progress-label"><span>Hardware Integration</span><span>Active</span></div>
-          <div class="progress-bar"><div class="progress-fill" style="background:linear-gradient(90deg,var(--orange),#ffbd2e);box-shadow:0 0 8px rgba(255,140,0,.5);--prog-w:60%"></div></div>
+          <div class="progress-label"><span>Hardware Assembly &amp; Integration</span><span>Active</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="background:var(--orange);--prog-w:60%"></div></div>
         </div>
         <div class="progress-wrap">
           <div class="progress-label"><span>Real-World Deployment</span><span>Upcoming</span></div>
-          <div class="progress-bar"><div class="progress-fill" style="background:var(--border-dim);box-shadow:none;--prog-w:10%"></div></div>
+          <div class="progress-bar"><div class="progress-fill" style="background:var(--text-muted);--prog-w:10%"></div></div>
         </div>
       </div>
     </section>
   </main>
 
   <div class="status-bar">
-    <div class="status-item"><i class="fas fa-user-shield"></i> AUTH_ANAS</div>
-    <div class="status-item online"><div class="status-dot"></div> Team Online</div>
+    <div class="status-item amber"><i class="fas fa-user-shield"></i> AUTH: ANAS</div>
+    <div class="status-item green"><div class="status-dot"></div> Team Online</div>
     <div class="status-item clock"></div>
   </div>
   <script src="script.js"></script>

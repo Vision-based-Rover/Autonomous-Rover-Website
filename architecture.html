@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AWR | System Architecture</title>
+  <title>AWR — System Architecture</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -13,9 +13,12 @@
   <header>
     <div class="container">
       <nav>
-        <div class="logo"><i class="fas fa-microchip"></i> WAREHOUSE_RL_v6.2</div>
+        <div class="logo">
+          <div class="logo-icon"><i class="fas fa-robot"></i></div>
+          AWR
+        </div>
         <ul>
-          <li><a href="index.html">Terminal</a></li>
+          <li><a href="index.html">Overview</a></li>
           <li><a href="hardware.html">Hardware</a></li>
           <li><a href="architecture.html" class="active">Architecture</a></li>
           <li><a href="industrial.html">Industrial</a></li>
@@ -26,129 +29,121 @@
   </header>
 
   <main>
-    <section class="container" style="padding-top: 40px;">
-      <div class="hero-label">Software Design &nbsp;—&nbsp; System Architecture</div>
+    <section class="container" style="padding-top:40px;">
+      <div class="hero-label">Embedded Software — Control Architecture</div>
       <div class="callout">
-        <strong>Design Philosophy:</strong> Modularity, scalability, and real-time performance. Each component operates independently while maintaining a unified control pipeline. The MVC pattern ensures clean separation of concerns across training, evaluation, and deployment contexts.
+        The software is structured around a <strong>Model-View-Controller</strong> pattern and a layered <strong>ROS 2 node graph</strong>. Each layer can be tested, replaced, or scaled independently — making the jump from simulation to real hardware a controlled, repeatable process.
       </div>
     </section>
 
+    <!-- CONTROL PIPELINE -->
     <section class="container">
-      <div class="section-header"><h2>// MVC Design Pattern</h2></div>
-      <div class="grid">
-        <div class="card">
-          <h3><i class="fas fa-database"></i> Models — Business Logic</h3>
-          <ul>
-            <li><strong>agent.py</strong> — PPO wrapper for training & inference</li>
-            <li><strong>environment.py</strong> — Gymnasium manager for complex layouts</li>
-            <li><strong>training.py</strong> — Hyperparameter & path management</li>
-            <li><strong>safety.py</strong> — Deterministic constraint enforcement</li>
-          </ul>
-          <span class="tag" style="margin-top:14px; display:inline-block;">Gymnasium</span>
-          <span class="tag">Stable-Baselines3</span>
+      <div class="section-header"><h2>Real-Time Control Pipeline</h2></div>
+      <div class="card-solo">
+        <h3><i class="fas fa-stream"></i> Hardware-to-Motor Signal Flow</h3>
+        <div class="pipeline">
+          <div class="pipeline-step">
+            <div class="p-badge">ToF / IR / IMU</div>
+            <div class="p-desc">Raw sensor readings arrive at up to 50 Hz via I²C and GPIO. The <strong>Sensor Bridge Node</strong> normalises and time-stamps each reading before publishing to the ROS 2 graph.</div>
+          </div>
+          <div class="pipeline-step">
+            <div class="p-badge">EKF State Estimator</div>
+            <div class="p-desc">Wheel encoder odometry and IMU yaw are fused through an <strong>Extended Kalman Filter</strong> at 100 Hz, producing a smooth pose estimate that corrects for wheel slip and drift.</div>
+          </div>
+          <div class="pipeline-step">
+            <div class="p-badge">PPO Policy Node</div>
+            <div class="p-desc">The <strong>PPO v6.2 policy</strong> receives the fused state vector and outputs a continuous velocity command at 10–20 Hz. Inference runs entirely on the Raspberry Pi — no network dependency.</div>
+          </div>
+          <div class="pipeline-step">
+            <div class="p-badge green">Safety Guard Node</div>
+            <div class="p-desc">A <strong>deterministic override layer</strong> clips any velocity command that would result in a collision given the current braking distance. This layer operates independently of the RL policy — it cannot be disabled.</div>
+          </div>
+          <div class="pipeline-step">
+            <div class="p-badge green">L298N Motor Driver</div>
+            <div class="p-desc">Safe, validated PWM signals are written to the motor driver. Left and right wheel speeds are set independently, enabling smooth differential steering through tight aisles.</div>
+          </div>
         </div>
-        <div class="card">
+      </div>
+    </section>
+
+    <!-- MVC -->
+    <section class="container">
+      <div class="section-header"><h2>Software MVC Layout</h2></div>
+      <div class="grid">
+        <div class="card" data-num="M">
+          <div class="card-indicator"></div>
+          <h3><i class="fas fa-database"></i> Models — Core Logic</h3>
+          <ul>
+            <li><strong>agent.py</strong> — PPO training &amp; inference wrapper</li>
+            <li><strong>environment.py</strong> — Gymnasium sim manager</li>
+            <li><strong>training.py</strong> — Hyperparameters &amp; curriculum stages</li>
+            <li><strong>safety.py</strong> — Braking constraint enforcement</li>
+          </ul>
+          <div style="margin-top:14px;">
+            <span class="tag amber">Stable-Baselines3</span>
+            <span class="tag">Gymnasium</span>
+          </div>
+        </div>
+        <div class="card" data-num="C">
+          <div class="card-indicator"></div>
           <h3><i class="fas fa-project-diagram"></i> Controllers — Orchestration</h3>
           <ul>
-            <li><strong>TrainingController</strong> — Curriculum learning workflow</li>
-            <li><strong>EvalController</strong> — Model validation & statistics</li>
-            <li><strong>ManualController</strong> — WASD keyboard override mode</li>
-            <li><strong>ROSBridgeController</strong> — Hardware command relay</li>
+            <li><strong>TrainingController</strong> — Runs curriculum learning stages</li>
+            <li><strong>EvalController</strong> — Validates policy across test maps</li>
+            <li><strong>ManualController</strong> — WASD keyboard override for testing</li>
+            <li><strong>ROSBridgeController</strong> — Relays commands to hardware</li>
           </ul>
-          <span class="tag" style="margin-top:14px; display:inline-block;">ROS 2 Humble</span>
-          <span class="tag">Python 3.11</span>
+          <div style="margin-top:14px;">
+            <span class="tag amber">ROS 2 Humble</span>
+            <span class="tag">Python 3.11</span>
+          </div>
         </div>
-        <div class="card">
-          <h3><i class="fas fa-desktop"></i> Views — Presentation</h3>
+        <div class="card" data-num="V">
+          <div class="card-indicator"></div>
+          <h3><i class="fas fa-desktop"></i> Views — Output Layer</h3>
           <ul>
-            <li><strong>WarehouseRenderer</strong> — Abstract Matplotlib/Pygame interface</li>
-            <li><strong>ConsoleDisplayer</strong> — Formatted terminal logging</li>
-            <li><strong>TelemetryDash</strong> — Real-time training metrics overlay</li>
+            <li><strong>WarehouseRenderer</strong> — Matplotlib / Pygame sim display</li>
+            <li><strong>ConsoleDisplayer</strong> — Structured terminal telemetry</li>
+            <li><strong>TelemetryDash</strong> — Real-time reward &amp; accuracy overlay</li>
           </ul>
-          <span class="tag" style="margin-top:14px; display:inline-block;">Matplotlib</span>
-          <span class="tag">Pygame</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="container">
-      <div class="section-header"><h2>// Data Flow Pipeline</h2></div>
-      <div class="card">
-        <h3><i class="fas fa-stream"></i> Control Pipeline</h3>
-        <div style="display: flex; flex-direction: column; gap: 0; margin-top: 8px;">
-          <!-- Pipeline steps -->
-          <div style="display:flex; align-items:center; gap:16px; padding:14px 0; border-bottom:1px solid var(--border-dim);">
-            <div style="background:var(--accent-dim);border:1px solid var(--accent);border-radius:4px;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--accent);white-space:nowrap;min-width:160px;text-align:center;">ToF / IR / IMU</div>
-            <div style="color:var(--text-muted);font-size:0.75rem;">→</div>
-            <div style="font-size:0.88rem;color:var(--text);">Raw sensor readings fused via <strong style="color:var(--header-text)">EKF State Estimator</strong></div>
-          </div>
-          <div style="display:flex; align-items:center; gap:16px; padding:14px 0; border-bottom:1px solid var(--border-dim);">
-            <div style="background:var(--accent-dim);border:1px solid var(--accent);border-radius:4px;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--accent);white-space:nowrap;min-width:160px;text-align:center;">Environment State</div>
-            <div style="color:var(--text-muted);font-size:0.75rem;">→</div>
-            <div style="font-size:0.88rem;color:var(--text);">Normalized observation vector passed to <strong style="color:var(--header-text)">PPO Policy Network</strong></div>
-          </div>
-          <div style="display:flex; align-items:center; gap:16px; padding:14px 0; border-bottom:1px solid var(--border-dim);">
-            <div style="background:var(--accent-dim);border:1px solid var(--accent);border-radius:4px;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--accent);white-space:nowrap;min-width:160px;text-align:center;">Policy Output</div>
-            <div style="color:var(--text-muted);font-size:0.75rem;">→</div>
-            <div style="font-size:0.88rem;color:var(--text);">Continuous velocity commands forwarded to <strong style="color:var(--header-text)">Safety Guard Node</strong></div>
-          </div>
-          <div style="display:flex; align-items:center; gap:16px; padding:14px 0; border-bottom:1px solid var(--border-dim);">
-            <div style="background:rgba(0,255,136,0.1);border:1px solid var(--green);border-radius:4px;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--green);white-space:nowrap;min-width:160px;text-align:center;">Safe Actions</div>
-            <div style="color:var(--text-muted);font-size:0.75rem;">→</div>
-            <div style="font-size:0.88rem;color:var(--text);">Validated commands clipped by braking distance constraints</div>
-          </div>
-          <div style="display:flex; align-items:center; gap:16px; padding:14px 0;">
-            <div style="background:rgba(0,255,136,0.1);border:1px solid var(--green);border-radius:4px;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--green);white-space:nowrap;min-width:160px;text-align:center;">Motor Controller</div>
-            <div style="color:var(--text-muted);font-size:0.75rem;">→</div>
-            <div style="font-size:0.88rem;color:var(--text);">PWM signals executed on <strong style="color:var(--header-text)">L298N driver</strong> — physical motion</div>
+          <div style="margin-top:14px;">
+            <span class="tag">Matplotlib</span>
+            <span class="tag">Pygame</span>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="container">
-      <div class="section-header"><h2>// Embedded Software Stack</h2></div>
+    <!-- EMBEDDED STACK -->
+    <section class="container" style="margin-bottom:50px;">
+      <div class="section-header"><h2>Embedded Node Stack</h2></div>
       <div class="terminal-window">
         <div class="terminal-header">
           <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
-          <span class="terminal-title">awr-node: ~/ros2_ws — ROS 2 Hybrid Stack</span>
+          <span class="terminal-title">awr-node: ~/ros2_ws — ros2 launch awr_bringup full_stack.launch.py</span>
         </div>
         <div class="terminal-body" style="color: var(--text);">
-          <code style="display:block; margin-bottom:10px; color:var(--accent);">$ ros2 launch awr_bringup full_stack.launch.py</code>
-          <code style="display:block; margin-bottom:6px; color:var(--text-muted);">Layer 1 — Sensor Bridge</code>
-          <code style="display:block; margin-bottom:12px;">  Fuses ToF, IR, IMU data → /awr/sensor_state (50Hz)</code>
-          <code style="display:block; margin-bottom:6px; color:var(--text-muted);">Layer 2 — State Estimator</code>
-          <code style="display:block; margin-bottom:12px;">  EKF wheel odometry + IMU yaw fusion → /awr/odom (100Hz)</code>
-          <code style="display:block; margin-bottom:6px; color:var(--text-muted);">Layer 3 — Policy Node (PPO v6.2)</code>
-          <code style="display:block; margin-bottom:12px;"><span style="color:var(--accent)">  10–20Hz RL inference → /awr/cmd_vel_raw</span></code>
-          <code style="display:block; margin-bottom:6px; color:var(--text-muted);">Layer 4 — Safety Guard</code>
-          <code style="display:block; margin-bottom:0;"><span style="color:var(--green)">  Deterministic override → /awr/cmd_vel (zero-collision)</span></code>
-        </div>
-      </div>
-    </section>
+          <code style="display:block;color:var(--amber);margin-bottom:12px;color:var(--accent);">$ ros2 launch awr_bringup full_stack.launch.py</code>
 
-    <section class="container" style="margin-bottom: 50px;">
-      <div class="section-header"><h2>// Architecture Benefits</h2></div>
-      <div class="grid">
-        <div class="card">
-          <h3><i class="fas fa-code"></i> Why MVC?</h3>
-          <p>Separating training logic, environment simulation, and rendering ensures <strong>maintainability</strong>, faster experimentation cycles, and a clear path to production deployment.</p>
-        </div>
-        <div class="card">
-          <h3><i class="fas fa-flask"></i> Testability</h3>
-          <p>Each layer can be unit-tested independently. Mock environments enable policy validation without physical hardware, accelerating iteration speed.</p>
-        </div>
-        <div class="card">
-          <h3><i class="fas fa-expand-arrows-alt"></i> Extensibility</h3>
-          <p>Adding a new sensor, renderer, or controller requires zero changes to the core training loop — just implement the abstract interface and plug it in.</p>
+          <code style="display:block;color:var(--text-muted);margin-bottom:4px;">[LAYER 1]  /awr/sensor_bridge  →  50 Hz</code>
+          <code style="display:block;margin-bottom:12px;">           Fuses ToF + IR + IMU → /awr/sensor_state</code>
+
+          <code style="display:block;color:var(--text-muted);margin-bottom:4px;">[LAYER 2]  /awr/state_estimator  →  100 Hz</code>
+          <code style="display:block;margin-bottom:12px;">           EKF wheel odometry + IMU yaw → /awr/odom</code>
+
+          <code style="display:block;color:var(--text-muted);margin-bottom:4px;">[LAYER 3]  /awr/policy_node  →  10–20 Hz</code>
+          <code style="display:block;margin-bottom:12px;color:#4a9ece;">           PPO v6.2 inference → /awr/cmd_vel_raw</code>
+
+          <code style="display:block;color:var(--text-muted);margin-bottom:4px;">[LAYER 4]  /awr/safety_guard  →  deterministic</code>
+          <code style="display:block;color:#27ae60;">           Braking override → /awr/cmd_vel  ✓ ZERO-COLLISION</code>
         </div>
       </div>
     </section>
   </main>
 
   <div class="status-bar">
-    <div class="status-item"><i class="fas fa-layer-group"></i> MVC_READY</div>
-    <div class="status-item online"><div class="status-dot"></div> ROS 2 Nominal</div>
+    <div class="status-item amber"><i class="fas fa-layer-group"></i> MVC READY</div>
+    <div class="status-item green"><div class="status-dot"></div> ROS 2 Nominal</div>
     <div class="status-item clock"></div>
   </div>
   <script src="script.js"></script>

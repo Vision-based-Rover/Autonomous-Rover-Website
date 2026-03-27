@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AWR Dashboard | v6.2</title>
+  <title>AWR — Autonomous Warehouse Robot</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -13,9 +13,12 @@
   <header>
     <div class="container">
       <nav>
-        <div class="logo"><i class="fas fa-microchip"></i> WAREHOUSE_RL_v6.2</div>
+        <div class="logo">
+          <div class="logo-icon"><i class="fas fa-robot"></i></div>
+          AWR
+        </div>
         <ul>
-          <li><a href="index.html" class="active">Terminal</a></li>
+          <li><a href="index.html" class="active">Overview</a></li>
           <li><a href="hardware.html">Hardware</a></li>
           <li><a href="architecture.html">Architecture</a></li>
           <li><a href="industrial.html">Industrial</a></li>
@@ -26,112 +29,127 @@
   </header>
 
   <main>
-    <section class="container hero-section">
+    <!-- HERO -->
+    <section class="hero-section container">
       <div class="hero">
-        <div class="hero-label">Autonomous Warehouse Robot &nbsp;—&nbsp; Reinforcement Learning</div>
-        <h1>Warehouse<br><span class="accent-word" data-text="Navigation">Navigation</span><br><span style="font-size:0.45em; color:var(--text); -webkit-text-stroke:0; font-weight:400; letter-spacing:3px; display:block; margin-top:8px;">via Reinforcement Learning</span></h1>
-        <p>Solving sparse reward environments via <strong>Curriculum Learning</strong>. Agent stability achieved at Level 6. Real-time obstacle avoidance with <strong>92% success accuracy</strong>.</p>
+        <div class="hero-label">Autonomous Warehouse Robot — RL-Powered Navigation</div>
+        <h1>Built to<br><em>Navigate.</em><br><span class="outline">Built to Scale.</span></h1>
+        <p class="hero-sub">Raspberry Pi 4 · ROS 2 · PPO v6.2 · ToF + IMU Sensor Fusion</p>
+        <p>A cost-effective, hardware-first autonomous ground vehicle that navigates real warehouse environments using onboard reinforcement learning — no cloud, no expensive infrastructure, no fixed tracks.</p>
 
-        <div class="stats-grid">
-          <div class="stat-box">
-            <span class="label">Model Version</span>
-            <span class="value">v6.2</span>
+        <!-- Spec strip -->
+        <div class="spec-strip">
+          <div class="spec-cell">
+            <span class="s-label">Model Version</span>
+            <span class="s-value">v6.2</span>
           </div>
-          <div class="stat-box">
-            <span class="label">Success Rate</span>
-            <span class="value accent">92.0%</span>
+          <div class="spec-cell">
+            <span class="s-label">Nav Accuracy</span>
+            <span class="s-value amber">92%</span>
           </div>
-          <div class="stat-box">
-            <span class="label">Algorithm</span>
-            <span class="value" style="font-size:1rem;">PPO / SB3</span>
+          <div class="spec-cell">
+            <span class="s-label">Algorithm</span>
+            <span class="s-value" style="font-size:1.1rem;">PPO / SB3</span>
           </div>
-          <div class="stat-box">
-            <span class="label">Status</span>
-            <span class="value green" style="font-size:0.9rem;">ONLINE</span>
+          <div class="spec-cell">
+            <span class="s-label">Inference Rate</span>
+            <span class="s-value blue">15 Hz</span>
+          </div>
+          <div class="spec-cell">
+            <span class="s-label">Status</span>
+            <span class="s-value green">ONLINE</span>
           </div>
         </div>
 
+        <!-- Terminal -->
         <div class="terminal-window">
           <div class="terminal-header">
             <div class="dot red"></div>
             <div class="dot yellow"></div>
             <div class="dot green"></div>
-            <span class="terminal-title">anas@awr-node: ~/training_logs — bash</span>
+            <span class="terminal-title">anas@awr-node: ~/ros2_ws — bash</span>
           </div>
           <div class="terminal-body"></div>
         </div>
       </div>
     </section>
-    <section id="demo" class="container" style="margin-top:0;">
-      <div class="section-header"><h2>// Live Demo</h2></div>
+
+    <!-- VIDEO -->
+    <section class="container">
+      <div class="section-header"><h2>Navigation Demo</h2></div>
       <div class="video-container">
         <video autoplay muted loop playsinline aria-label="Warehouse Navigation Demo">
           <source src="showcase/warehouse_level_6.mp4" type="video/mp4">
         </video>
         <div class="video-overlay">
-          <pre>{ "status": "MISSION_SUCCESS", "accuracy": "92%" }</pre>
+          <pre>STATUS: MISSION_SUCCESS&#10;ACCURACY: 92.0 %&#10;COLLISIONS: 0</pre>
         </div>
-        <div class="video-badge"><span>LIVE SIM</span></div>
+        <div class="video-badge">REC</div>
       </div>
     </section>
 
+    <!-- WHAT IT IS -->
     <section class="container">
-      <div class="section-header"><h2>// Core Capabilities</h2></div>
+      <div class="section-header"><h2>What is AWR?</h2></div>
       <div class="grid">
-        <div class="card">
-          <h3><i class="fas fa-industry"></i> Industry Relevance</h3>
-          <p>Warehouses rely on manual navigation or expensive multi-million dollar AGV systems. This system reduces cost by deploying RL-based adaptive navigation on commodity hardware.</p>
-          <div style="margin-top:16px;">
-            <span class="tag">Low CAPEX</span>
-            <span class="tag green">High ROI</span>
+        <div class="card" data-num="01">
+          <div class="card-indicator"></div>
+          <h3><i class="fas fa-robot"></i> Physical Robot</h3>
+          <p>A differential-drive ground vehicle assembled from off-the-shelf components — Raspberry Pi 4, L298N motor driver, VL53L0X ToF sensors, and MPU-6050 IMU. Total BOM cost is a fraction of commercial AGV systems.</p>
+          <div style="margin-top:14px;">
+            <span class="tag amber">Raspberry Pi 4</span>
+            <span class="tag">Differential Drive</span>
           </div>
         </div>
-        <div class="card">
-          <h3><i class="fas fa-brain"></i> Curriculum Learning</h3>
-          <p>Uses staged environment complexity to solve sparse reward problems. The agent progressively masters navigation before graduating to full warehouse layouts.</p>
-          <div class="progress-wrap" style="margin-top:18px;">
-            <div class="progress-label"><span>Training Convergence</span><span>Level 6 / 6</span></div>
-            <div class="progress-bar"><div class="progress-fill" style="--prog-w: 100%"></div></div>
+        <div class="card" data-num="02">
+          <div class="card-indicator"></div>
+          <h3><i class="fas fa-brain"></i> Onboard RL Policy</h3>
+          <p>A PPO policy trained via curriculum learning runs directly on the Raspberry Pi at 15 Hz. No cloud dependency — the robot reasons locally from sensor data and acts in real time.</p>
+          <div style="margin-top:14px;">
+            <span class="tag amber">PPO v6.2</span>
+            <span class="tag">15 Hz Local Inference</span>
           </div>
         </div>
-        <div class="card">
-          <h3><i class="fas fa-chart-line"></i> Scalability</h3>
-          <p>Architecture supports scaling from a single rover to multi-agent ROS 2 fleets using distributed discovery servers and swarm coordination protocols.</p>
-          <div style="margin-top:16px;">
-            <span class="tag">ROS 2</span>
-            <span class="tag">Multi-Agent</span>
+        <div class="card" data-num="03">
+          <div class="card-indicator"></div>
+          <h3><i class="fas fa-shield-alt"></i> Safety-First Design</h3>
+          <p>A deterministic Safety Guard Node overrides RL commands whenever braking distance constraints are violated — guaranteeing zero collisions regardless of policy edge cases.</p>
+          <div style="margin-top:14px;">
+            <span class="tag green">Zero Collisions</span>
+            <span class="tag">Hard Override</span>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="container" style="margin-bottom: 50px;">
-      <div class="section-header"><h2>// Current Status</h2></div>
-      <div class="card">
-        <h3>📊 Project Milestones</h3>
+    <!-- STATUS -->
+    <section class="container" style="margin-bottom:50px;">
+      <div class="section-header"><h2>Project Status</h2></div>
+      <div class="card-solo">
+        <h3><i class="fas fa-tasks"></i> Build Milestones</h3>
         <div class="progress-wrap">
-          <div class="progress-label"><span>Simulation</span><span>100%</span></div>
-          <div class="progress-bar"><div class="progress-fill" style="--prog-w: 100%"></div></div>
+          <div class="progress-label"><span>Simulation & RL Training</span><span>Complete</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="--prog-w:100%"></div></div>
         </div>
         <div class="progress-wrap">
-          <div class="progress-label"><span>Model Training</span><span>Stable</span></div>
-          <div class="progress-bar"><div class="progress-fill" style="--prog-w: 92%"></div></div>
+          <div class="progress-label"><span>Policy Accuracy</span><span>92%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="--prog-w:92%"></div></div>
         </div>
         <div class="progress-wrap">
-          <div class="progress-label"><span>Hardware Integration</span><span>In Progress</span></div>
-          <div class="progress-bar"><div class="progress-fill" style="background: linear-gradient(90deg, var(--orange), #ffbd2e); box-shadow: 0 0 8px rgba(255,140,0,0.5); --prog-w: 60%"></div></div>
+          <div class="progress-label"><span>Hardware Assembly & Integration</span><span>In Progress</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="background:var(--orange);--prog-w:60%"></div></div>
         </div>
         <div class="progress-wrap">
-          <div class="progress-label"><span>Deployment</span><span>Upcoming</span></div>
-          <div class="progress-bar"><div class="progress-fill" style="background: var(--border-dim); box-shadow: none; --prog-w: 15%"></div></div>
+          <div class="progress-label"><span>Real-World Deployment</span><span>Upcoming</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="background:var(--text-muted);--prog-w:10%"></div></div>
         </div>
       </div>
     </section>
   </main>
 
   <div class="status-bar">
-    <div class="status-item git"><i class="fas fa-code-branch"></i> main*</div>
-    <div class="status-item online"><div class="status-dot"></div> System Online</div>
+    <div class="status-item amber"><i class="fas fa-code-branch"></i> main</div>
+    <div class="status-item green"><div class="status-dot"></div> System Online</div>
     <div class="status-item"><i class="fas fa-microchip"></i> PPO v6.2</div>
     <div class="status-item clock"></div>
   </div>
