@@ -131,6 +131,9 @@ nav {
   border-radius: 4px; 
   overflow: hidden;
 }
+.logo:hover .logo-icon img {
+  transform: scale(1.1);
+}
 
 nav ul { list-style: none; display: flex; gap: 2px; padding: 0; }
 nav a {
