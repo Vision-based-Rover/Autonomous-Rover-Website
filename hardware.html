@@ -46,12 +46,12 @@
         <div class="card" data-num="01">
           <div class="card-indicator"></div>
           <h3><i class="fas fa-microchip"></i> Compute — Raspberry Pi 4</h3>
-          <p>The planned onboard brain. Will run ROS 2 Humble, the PPO inference loop at 15 Hz, and the Safety Guard Node simultaneously on 4 GB LPDDR4 RAM.</p>
+          <p>The planned onboard brain. Will run ROS 2 Humble, the PPO inference loop at 15 Hz, LiDAR scan processing, and the Safety Guard Node simultaneously on 4 GB LPDDR4 RAM.</p>
           <ul>
             <li>Quad-core Cortex-A72 @ 1.8 GHz</li>
             <li>4 GB LPDDR4 RAM</li>
-            <li>USB 3.0 for peripherals &amp; camera</li>
-            <li>GPIO for I²C sensor bus</li>
+            <li>USB 3.0 for LiDAR &amp; camera</li>
+            <li>GPIO for I²C IMU bus</li>
           </ul>
           <div style="margin-top:14px;">
             <span class="tag amber">Primary Compute</span>
@@ -62,7 +62,7 @@
         <div class="card" data-num="02">
           <div class="card-indicator"></div>
           <h3><i class="fas fa-cogs"></i> Actuation — Differential Drive</h3>
-          <p>Two independently driven wheels will enable zero-radius turns and precise odometric tracking — critical for tight warehouse aisle navigation.</p>
+          <p>Two independently driven wheels enable zero-radius turns and precise odometric tracking — critical for tight warehouse aisle navigation.</p>
           <ul>
             <li>L298N dual H-bridge motor driver</li>
             <li>PWM speed control per wheel</li>
@@ -77,30 +77,33 @@
 
         <div class="card" data-num="03">
           <div class="card-indicator"></div>
-          <h3><i class="fas fa-broadcast-tower"></i> Sensing — Perception Suite</h3>
-          <p>Multi-modal sensor fusion will give the robot a complete picture of its immediate environment for both navigation and safety enforcement.</p>
+          <h3><i class="fas fa-broadcast-tower"></i> Navigation — 360° LiDAR</h3>
+          <p>A full 360° LiDAR unit provides the robot's primary spatial awareness — generating a dense point-cloud map of the surrounding warehouse environment for real-time navigation and obstacle avoidance.</p>
           <ul>
-            <li>VL53L0X ToF sensors ×4 — ranging up to 2 m</li>
-            <li>MPU-6050 IMU — 6-axis roll/pitch/yaw</li>
-            <li>Sharp IR sensors ×2 — short-range wall-follow</li>
-            <li>HC-SR04 ultrasonic (redundancy fallback)</li>
+            <li>RPLIDAR A1 / A2 — 360° planar scan, up to 12 m range</li>
+            <li>~8,000 samples per revolution at 5–15 Hz scan rate</li>
+            <li>MPU-6050 IMU — 6-axis roll / pitch / yaw fusion</li>
+            <li>LiDAR + IMU + encoder fused via EKF for robust pose</li>
           </ul>
           <div style="margin-top:14px;">
-            <span class="tag amber">Sensor Fusion</span>
-            <span class="tag">EKF Odometry</span>
+            <span class="tag amber">360° LiDAR</span>
+            <span class="tag">EKF Fusion</span>
+            <span class="tag">Point Cloud</span>
           </div>
         </div>
 
         <div class="card" data-num="04">
           <div class="card-indicator"></div>
-          <h3><i class="fas fa-camera"></i> Vision — Pi Camera Module</h3>
-          <p>Raw video capture for visual navigation pipelines. Planned to feed Tiny-YOLO for obstacle classification, with SLAM and visual odometry correction in future iterations.</p>
+          <h3><i class="fas fa-camera"></i> Vision — Box &amp; Item Recognition</h3>
+          <p>The Pi Camera is dedicated exclusively to <strong>identifying boxes and warehouse items</strong> on shelves and the floor. Navigation is handled entirely by the LiDAR — the camera is a pure recognition pipeline.</p>
           <ul>
-            <li>Pi Camera Module 2 / 3</li>
-            <li>ESP32-CAM optional secondary angle</li>
-            <li>OpenCV lane &amp; marker detection pipeline</li>
+            <li>Pi Camera Module 3 — high-resolution item capture</li>
+            <li>Tiny-YOLO v4 — real-time box / SKU / label detection</li>
+            <li>OpenCV pre-processing — crop, contrast, barcode read</li>
+            <li>ESP32-CAM optional for secondary shelf viewing angle</li>
           </ul>
           <div style="margin-top:14px;">
+            <span class="tag amber">Item Recognition</span>
             <span class="tag">Tiny-YOLO</span>
             <span class="tag">OpenCV</span>
           </div>
@@ -122,6 +125,10 @@
           <div class="progress-bar"><div class="progress-fill" style="--prog-w:92%"></div></div>
         </div>
         <div class="progress-wrap">
+          <div class="progress-label"><span>LiDAR Scan Rate (Target)</span><span>10 Hz</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="--prog-w:75%"></div></div>
+        </div>
+        <div class="progress-wrap">
           <div class="progress-label"><span>Policy Inference Rate (Target)</span><span>15 Hz</span></div>
           <div class="progress-bar"><div class="progress-fill" style="--prog-w:78%"></div></div>
         </div>
@@ -130,7 +137,7 @@
           <div class="progress-bar"><div class="progress-fill" style="background:var(--text-muted);--prog-w:0%"></div></div>
         </div>
         <div class="progress-wrap">
-          <div class="progress-label"><span>Vision Pipeline</span><span>Planned</span></div>
+          <div class="progress-label"><span>Box / Item Recognition Pipeline</span><span>Planned</span></div>
           <div class="progress-bar"><div class="progress-fill" style="background:var(--orange);--prog-w:20%"></div></div>
         </div>
       </div>
@@ -141,20 +148,20 @@
       <div class="grid">
         <div class="card">
           <div class="card-indicator"></div>
-          <h3><i class="fas fa-exchange-alt"></i> Ultrasonic Fallback</h3>
-          <p>HC-SR04 ultrasonic sensors can substitute IR units in cost-constrained builds, maintaining functional obstacle avoidance without the full perception suite.</p>
-          <span class="tag" style="margin-top:12px;display:inline-block;">Fallback Option</span>
+          <h3><i class="fas fa-exchange-alt"></i> LiDAR Upgrade Path</h3>
+          <p>The RPLIDAR A1 can be swapped for the <strong>RPLIDAR A3</strong> or <strong>Hokuyo UST-10LX</strong> in higher-demand deployments — extending range to 25 m and boosting scan rate for faster corridors.</p>
+          <span class="tag" style="margin-top:12px;display:inline-block;">Upgrade Option</span>
         </div>
         <div class="card">
           <div class="card-indicator"></div>
           <h3><i class="fas fa-microchip"></i> Edge Inference Upgrade</h3>
-          <p>Policy inference can later migrate to a <strong>Coral USB Accelerator</strong> or <strong>TensorRT</strong> runtime — cutting latency below 20 ms and freeing CPU cycles for full camera processing.</p>
+          <p>Policy inference and YOLO detection can migrate to a <strong>Coral USB Accelerator</strong> or <strong>TensorRT</strong> runtime — cutting combined latency below 20 ms and freeing the CPU for full LiDAR map processing.</p>
           <span class="tag amber" style="margin-top:12px;display:inline-block;">Roadmap</span>
         </div>
         <div class="card">
           <div class="card-indicator"></div>
           <h3><i class="fas fa-compass"></i> IMU Upgrade Path</h3>
-          <p>The MPU-6050 can be upgraded to a <strong>BNO055</strong> for absolute orientation data and better heading stability — useful once real-world drift characteristics are measured.</p>
+          <p>The MPU-6050 can be upgraded to a <strong>BNO055</strong> for absolute orientation data and better heading stability — useful once real-world drift characteristics are measured against the LiDAR ground truth.</p>
           <span class="tag" style="margin-top:12px;display:inline-block;">Optional Upgrade</span>
         </div>
       </div>

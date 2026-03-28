@@ -35,7 +35,7 @@
     <section class="container" style="padding-top:40px;">
       <div class="hero-label">Software Design — Control Architecture</div>
       <div class="callout">
-        The software is structured around a <strong>Model-View-Controller</strong> pattern and a layered <strong>ROS 2 node graph</strong>. The MVC layer and simulation stack are <strong>fully implemented</strong>. The ROS 2 embedded pipeline is designed and ready for hardware integration once the physical build begins.
+        The software is structured around a <strong>Model-View-Controller</strong> pattern and a layered <strong>ROS 2 node graph</strong>. Navigation input comes from a <strong>360° LiDAR</strong>; box and item identification runs on a dedicated <strong>camera recognition pipeline</strong>. The MVC layer and simulation stack are <strong>fully implemented</strong>. The ROS 2 embedded pipeline is designed and ready for hardware integration once the physical build begins.
       </div>
     </section>
 
@@ -49,25 +49,31 @@
         </div>
         <div class="pipeline">
           <div class="pipeline-step">
-            <div class="p-badge">ToF / IR / IMU</div>
-            <div class="p-desc">Raw sensor readings will arrive at up to 50 Hz via I²C and GPIO. The <strong>Sensor Bridge Node</strong> normalises and time-stamps each reading before publishing to the ROS 2 graph.</div>
+            <div class="p-badge">360° LiDAR / IMU</div>
+            <div class="p-desc">Raw LiDAR scans (~8,000 points per revolution at 10 Hz) and IMU readings arrive via USB and I²C. The <strong>Sensor Bridge Node</strong> normalises, time-stamps, and publishes each scan to the ROS 2 graph as <code>/awr/scan</code> and <code>/awr/imu</code>.</div>
           </div>
           <div class="pipeline-step">
             <div class="p-badge">EKF State Estimator</div>
-            <div class="p-desc">Wheel encoder odometry and IMU yaw will be fused through an <strong>Extended Kalman Filter</strong> at 100 Hz, producing a smooth pose estimate that corrects for wheel slip and drift.</div>
+            <div class="p-desc">Wheel encoder odometry, IMU yaw, and LiDAR-derived displacement are fused through an <strong>Extended Kalman Filter</strong> at 100 Hz, producing a smooth pose estimate that corrects for wheel slip and rotational drift.</div>
           </div>
           <div class="pipeline-step">
             <div class="p-badge">PPO Policy Node</div>
-            <div class="p-desc">The <strong>PPO v6.2 policy</strong> — trained and validated in simulation — receives the fused state vector and outputs a continuous velocity command at 10–20 Hz. Inference runs entirely on the Raspberry Pi with no network dependency.</div>
+            <div class="p-desc">The <strong>PPO v6.2 policy</strong> — trained and validated in simulation — receives the fused state vector (pose + LiDAR obstacle map) and outputs a continuous velocity command at 10–20 Hz. Inference runs entirely on the Raspberry Pi with no network dependency.</div>
           </div>
           <div class="pipeline-step">
             <div class="p-badge green">Safety Guard Node</div>
-            <div class="p-desc">A <strong>deterministic override layer</strong> clips any velocity command that would result in a collision given the current braking distance. This layer operates independently of the RL policy and cannot be disabled.</div>
+            <div class="p-desc">A <strong>deterministic override layer</strong> clips any velocity command that would result in a collision given the current LiDAR braking distance. This layer operates independently of the RL policy and cannot be disabled.</div>
           </div>
           <div class="pipeline-step">
             <div class="p-badge green">L298N Motor Driver</div>
             <div class="p-desc">Safe, validated PWM signals are written to the motor driver. Left and right wheel speeds are set independently, enabling smooth differential steering through tight aisles.</div>
           </div>
+        </div>
+
+        <!-- Camera pipeline note -->
+        <div class="callout blue" style="margin-top:24px;font-size:0.85rem;">
+          <strong><i class="fas fa-camera" style="margin-right:8px;"></i>Parallel Camera Pipeline — Box &amp; Item Recognition:</strong>
+          The Pi Camera runs a <strong>dedicated Tiny-YOLO recognition node</strong> in parallel with the navigation pipeline. It publishes detected box labels, SKUs, and item classes to <code>/awr/items_detected</code> — completely decoupled from the LiDAR navigation stack so neither pipeline blocks the other.
         </div>
       </div>
     </section>
@@ -134,17 +140,20 @@
         <div class="terminal-body" style="color: var(--text);">
           <code style="display:block;color:var(--accent);margin-bottom:12px;">$ ros2 launch awr_bringup full_stack.launch.py</code>
 
-          <code style="display:block;color:var(--text-muted);margin-bottom:4px;">[LAYER 1]  /awr/sensor_bridge  →  50 Hz</code>
-          <code style="display:block;margin-bottom:12px;">           Fuses ToF + IR + IMU → /awr/sensor_state</code>
+          <code style="display:block;color:var(--text-muted);margin-bottom:4px;">[NAV — LAYER 1]  /awr/sensor_bridge  →  10 Hz LiDAR + 100 Hz IMU</code>
+          <code style="display:block;margin-bottom:12px;">                 360° point cloud + IMU → /awr/scan  /awr/imu</code>
 
-          <code style="display:block;color:var(--text-muted);margin-bottom:4px;">[LAYER 2]  /awr/state_estimator  →  100 Hz</code>
-          <code style="display:block;margin-bottom:12px;">           EKF wheel odometry + IMU yaw → /awr/odom</code>
+          <code style="display:block;color:var(--text-muted);margin-bottom:4px;">[NAV — LAYER 2]  /awr/state_estimator  →  100 Hz</code>
+          <code style="display:block;margin-bottom:12px;">                 EKF (LiDAR + IMU + encoder) → /awr/odom</code>
 
-          <code style="display:block;color:var(--text-muted);margin-bottom:4px;">[LAYER 3]  /awr/policy_node  →  10–20 Hz</code>
-          <code style="display:block;margin-bottom:12px;color:#4a9ece;">           PPO v6.2 inference → /awr/cmd_vel_raw</code>
+          <code style="display:block;color:var(--text-muted);margin-bottom:4px;">[NAV — LAYER 3]  /awr/policy_node  →  10–20 Hz</code>
+          <code style="display:block;margin-bottom:12px;color:#4a9ece;">                 PPO v6.2 inference → /awr/cmd_vel_raw</code>
 
-          <code style="display:block;color:var(--text-muted);margin-bottom:4px;">[LAYER 4]  /awr/safety_guard  →  deterministic</code>
-          <code style="display:block;color:#27ae60;">           Braking override → /awr/cmd_vel  ✓ ZERO-COLLISION</code>
+          <code style="display:block;color:var(--text-muted);margin-bottom:4px;">[NAV — LAYER 4]  /awr/safety_guard  →  deterministic</code>
+          <code style="display:block;color:#27ae60;margin-bottom:16px;">                 LiDAR braking override → /awr/cmd_vel  ✓ ZERO-COLLISION</code>
+
+          <code style="display:block;color:var(--text-muted);margin-bottom:4px;">[VIS — PARALLEL]  /awr/vision_node  →  5–10 Hz  (independent)</code>
+          <code style="display:block;color:#4a9ece;">                 Tiny-YOLO cam pipeline → /awr/items_detected  📦 BOX &amp; ITEM ID</code>
         </div>
       </div>
     </section>
