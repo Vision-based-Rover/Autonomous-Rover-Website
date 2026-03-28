@@ -12,9 +12,19 @@ document.addEventListener("DOMContentLoaded", () => {
     ring.style.left = rx+'px'; ring.style.top = ry+'px';
     requestAnimationFrame(tick);
   })();
-  document.querySelectorAll('a,button').forEach(el => {
-    el.addEventListener('mouseenter', () => { ring.style.width='44px'; ring.style.height='44px'; ring.style.opacity='0.9'; });
-    el.addEventListener('mouseleave', () => { ring.style.width='26px'; ring.style.height='26px'; ring.style.opacity='0.55'; });
+
+  /* UPDATED: Added '.logo' to the selector list below */
+  document.querySelectorAll('a, button, .logo').forEach(el => {
+    el.addEventListener('mouseenter', () => { 
+      ring.style.width='44px'; 
+      ring.style.height='44px'; 
+      ring.style.opacity='0.9'; 
+    });
+    el.addEventListener('mouseleave', () => { 
+      ring.style.width='26px'; 
+      ring.style.height='26px'; 
+      ring.style.opacity='0.55'; 
+    });
   });
 
   /* ── PARTICLE CANVAS ── */
