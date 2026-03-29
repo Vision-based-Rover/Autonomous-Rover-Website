@@ -13,17 +13,16 @@ document.addEventListener("DOMContentLoaded", () => {
     requestAnimationFrame(tick);
   })();
 
-  /* UPDATED: Added '.logo' to the selector list below */
   document.querySelectorAll('a, button, .logo').forEach(el => {
-    el.addEventListener('mouseenter', () => { 
-      ring.style.width='44px'; 
-      ring.style.height='44px'; 
-      ring.style.opacity='0.9'; 
+    el.addEventListener('mouseenter', () => {
+      ring.style.width='44px';
+      ring.style.height='44px';
+      ring.style.opacity='0.9';
     });
-    el.addEventListener('mouseleave', () => { 
-      ring.style.width='26px'; 
-      ring.style.height='26px'; 
-      ring.style.opacity='0.55'; 
+    el.addEventListener('mouseleave', () => {
+      ring.style.width='26px';
+      ring.style.height='26px';
+      ring.style.opacity='0.55';
     });
   });
 
@@ -34,30 +33,30 @@ document.addEventListener("DOMContentLoaded", () => {
     let W, H, pts = [];
     function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
     resize(); window.addEventListener('resize', resize);
-    const N = Math.min(50, Math.floor(window.innerWidth/22));
-    for (let i=0; i<N; i++) pts.push({
-      x: Math.random()*W, y: Math.random()*H,
-      vx: (Math.random()-.5)*.25, vy: (Math.random()-.5)*.25,
-      a: Math.random()*.35+.05
+    const N = Math.min(50, Math.floor(window.innerWidth / 22));
+    for (let i = 0; i < N; i++) pts.push({
+      x: Math.random() * W, y: Math.random() * H,
+      vx: (Math.random() - .5) * .25, vy: (Math.random() - .5) * .25,
+      a: Math.random() * .35 + .05
     });
     function draw() {
-      ctx.clearRect(0,0,W,H);
-      pts.forEach((p,i) => {
+      ctx.clearRect(0, 0, W, H);
+      pts.forEach((p, i) => {
         p.x += p.vx; p.y += p.vy;
-        if (p.x<0)p.x=W; if (p.x>W)p.x=0;
-        if (p.y<0)p.y=H; if (p.y>H)p.y=0;
+        if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+        if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
         ctx.save();
         ctx.translate(p.x, p.y);
-        ctx.rotate(Math.PI/4);
+        ctx.rotate(Math.PI / 4);
         ctx.fillStyle = `rgba(232,160,32,${p.a})`;
-        ctx.fillRect(-2,-2,4,4);
+        ctx.fillRect(-2, -2, 4, 4);
         ctx.restore();
-        for (let j=i+1; j<pts.length; j++) {
-          const q=pts[j], d=Math.hypot(p.x-q.x,p.y-q.y);
-          if (d<110) {
-            ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y);
-            ctx.strokeStyle=`rgba(232,160,32,${0.05*(1-d/110)})`;
-            ctx.lineWidth=.5; ctx.stroke();
+        for (let j = i + 1; j < pts.length; j++) {
+          const q = pts[j], d = Math.hypot(p.x - q.x, p.y - q.y);
+          if (d < 110) {
+            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
+            ctx.strokeStyle = `rgba(232,160,32,${0.05 * (1 - d / 110)})`;
+            ctx.lineWidth = .5; ctx.stroke();
           }
         }
       });
@@ -68,38 +67,60 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ── TERMINAL TYPING ── */
   const lines = [
-    { t:"awr@sim-node:~$ python test.py --model models/warehouse_demo_ppo_v6.2.zip --level 6", c:"cmd" },
-    { t:"", c:"" },
-    { t:"[INFO]  Loading PPO v6.2 policy weights...", c:"info" },
-    { t:"[OK]    Model loaded — 92.0% validation accuracy", c:"ok" },
-    { t:"[OK]    Gymnasium warehouse env initialised — Level 6", c:"ok" },
-    { t:"[OK]    MVC stack ready — EvalController active", c:"ok" },
-    { t:"", c:"" },
-    { t:"[SIM]   Episode  1 — Steps:  84 — Reward: 421.3 — SUCCESS", c:"ok" },
-    { t:"[SIM]   Episode  2 — Steps:  91 — Reward: 408.7 — SUCCESS", c:"ok" },
-    { t:"[SIM]   Episode  3 — Steps: 102 — Reward: 395.1 — SUCCESS", c:"ok" },
-    { t:"", c:"" },
-    { t:"[DONE]  3/3 episodes — Accuracy: 100% — Collisions: 0", c:"success" },
-    { t:"awr@sim-node:~$ █ Hardware integration: upcoming", c:"warn" },
+    { t: "awr@sim-node:~$ python test.py --model models/warehouse_demo_ppo_v6.2.zip --level 6", c: "cmd" },
+    { t: "", c: "" },
+    { t: "[INFO]  Loading PPO v6.2 policy weights...", c: "info" },
+    { t: "[OK]    Model loaded — 92.0% validation accuracy", c: "ok" },
+    { t: "[OK]    Gymnasium warehouse env initialised — Level 6", c: "ok" },
+    { t: "[OK]    MVC stack ready — EvalController active", c: "ok" },
+    { t: "", c: "" },
+    { t: "[SIM]   Episode  1 — Steps:  84 — Reward: 421.3 — SUCCESS", c: "ok" },
+    { t: "[SIM]   Episode  2 — Steps:  91 — Reward: 408.7 — SUCCESS", c: "ok" },
+    { t: "[SIM]   Episode  3 — Steps: 102 — Reward: 395.1 — SUCCESS", c: "ok" },
+    { t: "", c: "" },
+    { t: "[DONE]  3/3 episodes — Accuracy: 100% — Collisions: 0", c: "success" },
+    { t: "awr@sim-node:~$ █ Hardware integration: upcoming", c: "warn" },
   ];
+
   function typeTerminal() {
     const body = document.querySelector('.terminal-body');
     if (!body || body.dataset.typed) return;
-    body.dataset.typed='1'; body.innerHTML='';
-    let i=0;
+    body.dataset.typed = '1'; body.innerHTML = '';
+    let i = 0;
     function next() {
-      if (i>=lines.length) { const cur=document.createElement('span'); cur.className='cursor-blink'; body.appendChild(cur); return; }
-      const {t,c}=lines[i++];
-      const el=document.createElement('code'); el.style.display='block';
-      if(c) el.classList.add(c); el.textContent=t; body.appendChild(el);
-      body.scrollTop=body.scrollHeight;
-      setTimeout(next, t===''?60:220);
+      if (i >= lines.length) {
+        const cur = document.createElement('span'); cur.className = 'cursor-blink';
+        body.appendChild(cur); return;
+      }
+      const { t, c } = lines[i++];
+      const el = document.createElement('code'); el.style.display = 'block';
+      if (c) el.classList.add(c); el.textContent = t; body.appendChild(el);
+      body.scrollTop = body.scrollHeight;
+      setTimeout(next, t === '' ? 60 : 220);
     }
     next();
   }
 
   /* ── SCANLINES ── */
-  const sl=document.createElement('div'); sl.className='scanlines'; document.body.appendChild(sl);
+  const sl = document.createElement('div'); sl.className = 'scanlines'; document.body.appendChild(sl);
+
+  /* ── NUMBER COUNTER ANIMATION ── */
+  function animateCounter(el) {
+    if (el.dataset.counted) return;
+    el.dataset.counted = '1';
+    const target = parseFloat(el.dataset.target);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1800;
+    const start = performance.now();
+    function step(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      const value = target * eased;
+      el.textContent = (Number.isInteger(target) ? Math.round(value) : value.toFixed(1)) + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
 
   /* ── INTERSECTION OBSERVER ── */
   const obs = new IntersectionObserver(entries => {
@@ -107,17 +128,33 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!e.isIntersecting) return;
       e.target.classList.add('show');
       if (e.target.classList.contains('terminal-window')) typeTerminal();
+      // Trigger counters inside newly visible elements
+      e.target.querySelectorAll('[data-target]').forEach(animateCounter);
     });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.12 });
 
-  document.querySelectorAll('.card,.card-solo,.video-container,.terminal-window,.section-header,.callout,.meta-box,.team-table-container,.spec-strip,.pipeline').forEach(el => {
-    el.classList.add('hidden'); obs.observe(el);
+  // Observe animated elements
+  document.querySelectorAll(
+    '.card, .card-solo, .video-container, .terminal-window, .section-header, ' +
+    '.callout, .meta-box, .team-table-container, .spec-strip, .pipeline, ' +
+    '.lidar-stats-grid, .sensor-split, .metrics-band, .lidar-header-card'
+  ).forEach(el => {
+    el.classList.add('hidden');
+    obs.observe(el);
+  });
+
+  // Also observe counters that aren't inside a .hidden parent (spec-strip on hero)
+  document.querySelectorAll('[data-target]').forEach(el => {
+    if (!el.closest('.hidden')) {
+      const wrapper = el.closest('.spec-strip, .metrics-band') || el;
+      obs.observe(wrapper);
+    }
   });
 
   /* ── CLOCK ── */
   function tick() {
-    const t = new Date().toLocaleTimeString([],{hour12:false});
-    document.querySelectorAll('.clock').forEach(c=>c.textContent=t);
+    const t = new Date().toLocaleTimeString([], { hour12: false });
+    document.querySelectorAll('.clock').forEach(c => c.textContent = t);
   }
-  tick(); setInterval(tick,1000);
+  tick(); setInterval(tick, 1000);
 });

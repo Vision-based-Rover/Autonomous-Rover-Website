@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AWR — Autonomous Warehouse Robot</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style-v2.css">
   <link rel="icon" type="image/png" href="miclogo.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -16,7 +17,7 @@
       <nav>
         <div class="logo">
           <div class="logo-icon">
-            <img src="miclogo.png" alt="MIC Logo" style="width: 100%; height: 100%; object-fit: contain;">
+            <img src="miclogo.png" alt="MIC Logo" style="width:100%;height:100%;object-fit:contain;">
           </div>
           AWR
         </div>
@@ -34,46 +35,67 @@
   <main>
     <!-- HERO -->
     <section class="hero-section container">
-      <div class="hero">
-        <div class="hero-label">Autonomous Warehouse Robot — Simulation &amp; RL Complete</div>
-        <h1>Trained to<br><em>Navigate.</em><br><span class="outline">Built to Scale.</span></h1>
-        <p class="hero-sub">PPO v6.2 · Curriculum RL · Gymnasium · ROS 2 Architecture</p>
-        <p>A simulation-first autonomous navigation system for warehouse environments — the RL policy and full software stack are complete and validated. Navigation is driven by <strong>360° LiDAR</strong>; box and item recognition runs on a dedicated <strong>camera pipeline</strong>. Hardware integration is the next phase.</p>
+      <div class="hero-label">Autonomous Warehouse Robot — Simulation &amp; RL Complete</div>
 
-        <!-- Spec strip -->
-        <div class="spec-strip">
-          <div class="spec-cell">
-            <span class="s-label">Model Version</span>
-            <span class="s-value">v6.2</span>
-          </div>
-          <div class="spec-cell">
-            <span class="s-label">Nav Accuracy</span>
-            <span class="s-value amber">92%</span>
-          </div>
-          <div class="spec-cell">
-            <span class="s-label">Algorithm</span>
-            <span class="s-value" style="font-size:1.1rem;">PPO / SB3</span>
-          </div>
-          <div class="spec-cell">
-            <span class="s-label">Inference Rate</span>
-            <span class="s-value blue">15 Hz</span>
-          </div>
-          <div class="spec-cell">
-            <span class="s-label">Phase</span>
-            <span class="s-value amber">SIM ✓</span>
+      <div class="hero-grid-v2">
+        <div class="hero-headline-col">
+          <h1>Trained to<br>
+            <em class="glitch" data-text="Navigate.">Navigate.</em><br>
+            <span class="outline">Built to Scale.</span>
+          </h1>
+          <div class="hero-accent-bar"></div>
+        </div>
+        <div class="hero-copy-col">
+          <p class="hero-sub">PPO v6.2 · Curriculum RL · Gymnasium · ROS 2 Architecture</p>
+          <p>A simulation-first autonomous navigation system for warehouse environments. The RL policy and full software stack are complete and validated. <strong>360° LiDAR</strong> drives all navigation; a dedicated <strong>camera pipeline</strong> handles box and item recognition. Hardware integration is the next phase.</p>
+          <div class="sensor-pills">
+            <div class="sensor-pill">
+              <div class="sp-icon amber"><i class="fas fa-broadcast-tower"></i></div>
+              <div>
+                <span class="sp-label">Navigation Input</span>
+                <span class="sp-value">360° LiDAR — RPLIDAR A1</span>
+              </div>
+            </div>
+            <div class="sensor-pill">
+              <div class="sp-icon blue"><i class="fas fa-camera"></i></div>
+              <div>
+                <span class="sp-label">Item Recognition</span>
+                <span class="sp-value">Pi Camera + Tiny-YOLO v4</span>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
 
-        <!-- Terminal -->
-        <div class="terminal-window">
-          <div class="terminal-header">
-            <div class="dot red"></div>
-            <div class="dot yellow"></div>
-            <div class="dot green"></div>
-            <span class="terminal-title">awr@sim-node: ~/awr/AI — bash</span>
-          </div>
-          <div class="terminal-body"></div>
+      <div class="spec-strip">
+        <div class="spec-cell">
+          <span class="s-label">Model</span>
+          <span class="s-value">v6.2</span>
         </div>
+        <div class="spec-cell">
+          <span class="s-label">Nav Accuracy</span>
+          <span class="s-value amber" data-target="92" data-suffix="%">0%</span>
+        </div>
+        <div class="spec-cell">
+          <span class="s-label">Algorithm</span>
+          <span class="s-value" style="font-size:1rem;">PPO/SB3</span>
+        </div>
+        <div class="spec-cell">
+          <span class="s-label">Inference</span>
+          <span class="s-value blue" data-target="15" data-suffix=" Hz">0 Hz</span>
+        </div>
+        <div class="spec-cell">
+          <span class="s-label">Collisions</span>
+          <span class="s-value green">ZERO</span>
+        </div>
+      </div>
+
+      <div class="terminal-window">
+        <div class="terminal-header">
+          <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+          <span class="terminal-title">awr@sim-node: ~/awr/AI — bash</span>
+        </div>
+        <div class="terminal-body"></div>
       </div>
     </section>
 
@@ -81,13 +103,47 @@
     <section class="container">
       <div class="section-header"><h2>Simulation Demo</h2></div>
       <div class="video-container">
-        <video autoplay muted loop playsinline aria-label="Warehouse Simulation Demo">
+        <video autoplay muted loop playsinline>
           <source src="showcase/warehouse_level_6.mp4" type="video/mp4">
         </video>
-        <div class="video-overlay">
-          <pre>STATUS: MISSION_SUCCESS&#10;ACCURACY: 92.0 %&#10;COLLISIONS: 0</pre>
-        </div>
+        <div class="video-overlay"><pre>STATUS: MISSION_SUCCESS&#10;ACCURACY: 92.0 %&#10;COLLISIONS: 0</pre></div>
         <div class="video-badge">SIM</div>
+      </div>
+    </section>
+
+    <!-- METRICS BAND -->
+    <section class="container">
+      <div class="section-header"><h2>Policy Performance</h2></div>
+      <div class="metrics-band">
+        <div class="metric-block">
+          <div class="mb-val amber" data-target="92" data-suffix="%">0%</div>
+          <div class="mb-label">Navigation Accuracy</div>
+          <div class="mb-sub">across 6 sim levels</div>
+        </div>
+        <div class="metric-sep"></div>
+        <div class="metric-block">
+          <div class="mb-val green">ZERO</div>
+          <div class="mb-label">Collisions</div>
+          <div class="mb-sub">hard safety guarantee</div>
+        </div>
+        <div class="metric-sep"></div>
+        <div class="metric-block">
+          <div class="mb-val blue" data-target="15" data-suffix=" Hz">0 Hz</div>
+          <div class="mb-label">Inference Rate</div>
+          <div class="mb-sub">on-device, no network</div>
+        </div>
+        <div class="metric-sep"></div>
+        <div class="metric-block">
+          <div class="mb-val" data-target="6" data-suffix="">0</div>
+          <div class="mb-label">Difficulty Levels</div>
+          <div class="mb-sub">curriculum training stages</div>
+        </div>
+        <div class="metric-sep"></div>
+        <div class="metric-block">
+          <div class="mb-val amber">360°</div>
+          <div class="mb-label">LiDAR Coverage</div>
+          <div class="mb-sub">zero blind spots</div>
+        </div>
       </div>
     </section>
 
@@ -98,29 +154,25 @@
         <div class="card" data-num="01">
           <div class="card-indicator"></div>
           <h3><i class="fas fa-brain"></i> RL-Trained Policy</h3>
-          <p>A PPO agent trained from scratch via curriculum learning in a custom Gymnasium warehouse simulation. The policy reaches 92% navigation accuracy across six levels of increasing difficulty — zero collisions.</p>
+          <p>A PPO agent trained from scratch via curriculum learning in a custom Gymnasium warehouse simulation. 92% navigation accuracy across six difficulty levels — zero collisions.</p>
           <div style="margin-top:14px;">
-            <span class="tag amber">PPO v6.2</span>
-            <span class="tag">Stable-Baselines3</span>
+            <span class="tag amber">PPO v6.2</span><span class="tag">Stable-Baselines3</span><span class="tag">Gymnasium</span>
           </div>
         </div>
         <div class="card" data-num="02">
           <div class="card-indicator"></div>
-          <h3><i class="fas fa-microchip"></i> Planned Hardware</h3>
-          <p>The physical robot is designed around a Raspberry Pi 4 and L298N motor driver. A <strong>360° LiDAR</strong> handles all navigation and obstacle avoidance; the <strong>Pi Camera</strong> runs a dedicated Tiny-YOLO pipeline for box and item identification. Full BOM is finalised — hardware build is the next milestone.</p>
+          <h3><i class="fas fa-layer-group"></i> Dual Sensor Architecture</h3>
+          <p>Two fully decoupled pipelines: a <strong>360° LiDAR</strong> for spatial navigation and obstacle avoidance, and a <strong>Pi Camera + Tiny-YOLO</strong> for real-time box and SKU identification. Both run in parallel — neither blocks the other.</p>
           <div style="margin-top:14px;">
-            <span class="tag">360° LiDAR</span>
-            <span class="tag">Pi Camera</span>
-            <span class="tag amber">In Procurement</span>
+            <span class="tag amber">360° LiDAR</span><span class="tag blue">Pi Camera</span><span class="tag">Parallel Pipelines</span>
           </div>
         </div>
         <div class="card" data-num="03">
           <div class="card-indicator"></div>
           <h3><i class="fas fa-shield-alt"></i> Safety-First Design</h3>
-          <p>A deterministic Safety Guard Node overrides RL commands whenever LiDAR-derived braking distance constraints are violated — guaranteeing zero collisions regardless of policy edge cases, in both simulation and hardware.</p>
+          <p>A deterministic Safety Guard Node overrides RL commands whenever LiDAR-derived braking distance constraints are violated — guaranteeing zero collisions regardless of policy edge cases.</p>
           <div style="margin-top:14px;">
-            <span class="tag green">Zero Collisions</span>
-            <span class="tag">Hard Override</span>
+            <span class="tag green">Zero Collisions</span><span class="tag">Hard Override</span><span class="tag">Deterministic</span>
           </div>
         </div>
       </div>
@@ -132,15 +184,15 @@
       <div class="card-solo">
         <h3><i class="fas fa-tasks"></i> Build Milestones</h3>
         <div class="progress-wrap">
-          <div class="progress-label"><span>Simulation Environment</span><span>Complete</span></div>
+          <div class="progress-label"><span>Simulation Environment</span><span>Complete ✓</span></div>
           <div class="progress-bar"><div class="progress-fill" style="--prog-w:100%"></div></div>
         </div>
         <div class="progress-wrap">
-          <div class="progress-label"><span>RL Policy — PPO v6.2 (92% accuracy)</span><span>Complete</span></div>
+          <div class="progress-label"><span>RL Policy — PPO v6.2 (92% accuracy)</span><span>Complete ✓</span></div>
           <div class="progress-bar"><div class="progress-fill" style="--prog-w:100%"></div></div>
         </div>
         <div class="progress-wrap">
-          <div class="progress-label"><span>Software Architecture (MVC + ROS 2 Design)</span><span>Complete</span></div>
+          <div class="progress-label"><span>Software Architecture (MVC + ROS 2 Design)</span><span>Complete ✓</span></div>
           <div class="progress-bar"><div class="progress-fill" style="--prog-w:100%"></div></div>
         </div>
         <div class="progress-wrap">
@@ -158,10 +210,10 @@
   <div class="status-bar">
     <div class="status-item amber"><i class="fas fa-code-branch"></i> main</div>
     <div class="status-item green"><div class="status-dot"></div> Sim Complete</div>
+    <div class="status-item"><i class="fas fa-broadcast-tower"></i> 360° LiDAR</div>
     <div class="status-item"><i class="fas fa-microchip"></i> PPO v6.2</div>
     <div class="status-item clock"></div>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>
